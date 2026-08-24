@@ -2,323 +2,850 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Xuân Bách — Developer · Designer · Dreamer</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --bg0:#060210;
-    --bg1:#0f0819;
-    --bg2:#170c28;
-    --purple:#9b5cf6;
-    --pink:#f78ae0;
-    --cyan:#52d9e8;
-    --moon:#f3e4ff;
-    --text:#f3ecff;
-    --muted:#a998c4;
-    --line:rgba(255,255,255,.09);
-    --glass:rgba(255,255,255,.04);
+:root{
+  --bg:#060210;
+  --bg2:#10071f;
+  --purple:#9b5cf6;
+  --pink:#f78ae0;
+  --cyan:#52d9e8;
+  --text:#f6efff;
+  --muted:#a998c4;
+  --line:rgba(255,255,255,.1);
+  --glass:rgba(255,255,255,.045);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body{
+  font-family:"Be Vietnam Pro",sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  overflow-x:hidden;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,input,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+::selection{
+  background:var(--purple);
+  color:white;
+}
+
+/* ================= BACKGROUND ================= */
+
+.background{
+  position:fixed;
+  inset:0;
+  z-index:-10;
+  overflow:hidden;
+  background:
+    radial-gradient(1000px 500px at 50% -10%,#693ca8 0%,transparent 60%),
+    radial-gradient(600px 400px at 0 0,rgba(247,138,224,.2),transparent 70%),
+    radial-gradient(600px 400px at 100% 0,rgba(82,217,232,.13),transparent 70%),
+    linear-gradient(180deg,#170a2e,#060210 75%);
+}
+
+.background::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.7) 1px,transparent 1px);
+  background-size:120px 120px;
+  opacity:.08;
+}
+
+.moon{
+  position:absolute;
+  top:8vh;
+  left:50%;
+  width:min(230px,30vw);
+  aspect-ratio:1;
+  border-radius:50%;
+  transform:translateX(-50%);
+  background:
+    radial-gradient(circle at 35% 30%,#fff,#ecd7ff 40%,#b887ff);
+  box-shadow:0 0 120px rgba(192,135,255,.45);
+  opacity:.5;
+}
+
+.cover-bg{
+  position:absolute;
+  inset:0;
+  background-position:center;
+  background-size:cover;
+  opacity:0;
+  transition:.4s;
+}
+
+.cover-bg.active{
+  opacity:.2;
+}
+
+/* ================= PETALS ================= */
+
+#petals{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.petal{
+  position:absolute;
+  top:-30px;
+  border-radius:50% 10% 50% 50%;
+  background:linear-gradient(135deg,#ffe0fb,#d879d0);
+  opacity:.6;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  from{
+    transform:translate3d(0,-30px,0) rotate(0);
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:'Be Vietnam Pro', sans-serif;
-    background:var(--bg0);
-    color:var(--text);
-    overflow-x:hidden;
-    min-height:100vh;
+  to{
+    transform:translate3d(var(--drift),110vh,0) rotate(360deg);
   }
-  ::selection{background:var(--purple); color:#fff;}
-  a{color:inherit; text-decoration:none;}
- 
-  /* ===================== FIXED ATMOSPHERE ===================== */
-  .atmosphere{position:fixed; inset:0; z-index:0; pointer-events:none;}
-  .sky{
-    position:absolute; inset:0;
-    background:
-      radial-gradient(120% 55% at 50% -8%, #6a3fb0 0%, transparent 55%),
-      radial-gradient(70% 45% at 10% 8%, rgba(244,114,240,.28), transparent 60%),
-      radial-gradient(70% 45% at 92% 4%, rgba(79,216,238,.16), transparent 60%),
-      linear-gradient(180deg,#170a2e 0%, #170a2e 22%, #10071f 55%, #060210 100%);
+}
+
+/* ================= NAV ================= */
+
+.nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:22px clamp(20px,5vw,64px);
+  transition:.3s;
+}
+
+.nav.scrolled{
+  background:rgba(6,2,16,.78);
+  backdrop-filter:blur(16px);
+  padding-top:14px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+
+.logo{
+  font-family:"Great Vibes",cursive;
+  font-size:30px;
+  background:linear-gradient(90deg,#fff,#d8c3ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.nav-links a{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+  transition:.25s;
+}
+
+.nav-links a:hover{
+  color:#fff;
+}
+
+.nav-cta{
+  padding:10px 18px;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:white!important;
+}
+
+.menu-btn{
+  display:none;
+  width:40px;
+  height:40px;
+  border:1px solid var(--line);
+  background:var(--glass);
+  border-radius:12px;
+  color:white;
+  font-size:20px;
+}
+
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  z-index:90;
+  background:rgba(5,2,12,.97);
+  backdrop-filter:blur(20px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:25px;
+  transform:translateY(-100%);
+  transition:.4s;
+}
+
+.mobile-menu.open{
+  transform:translateY(0);
+}
+
+.mobile-menu a{
+  font-size:20px;
+}
+
+/* ================= COMMON ================= */
+
+.wrap{
+  position:relative;
+  z-index:2;
+}
+
+.container{
+  width:min(1180px,calc(100% - 40px));
+  margin:auto;
+}
+
+section{
+  padding:110px 0;
+}
+
+.eyebrow{
+  color:var(--pink);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+
+.section-title{
+  margin-top:10px;
+  font-size:clamp(30px,5vw,46px);
+  font-weight:900;
+}
+
+.section-title em{
+  font-family:"Great Vibes",cursive;
+  font-style:normal;
+  font-size:1.3em;
+  font-weight:400;
+  background:linear-gradient(90deg,var(--pink),var(--cyan));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(25px);
+  transition:.8s;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:130px 20px 100px;
+}
+
+.hero-inner{
+  width:min(700px,100%);
+}
+
+.avatar-wrap{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  margin:25px 0 10px;
+}
+
+.avatar{
+  width:150px;
+  height:150px;
+  border-radius:40%;
+  padding:3px;
+  background:conic-gradient(
+    var(--purple),
+    var(--pink),
+    var(--cyan),
+    var(--purple)
+  );
+  box-shadow:0 0 50px rgba(155,92,246,.5);
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  border-radius:38%;
+  background:#170c28;
+}
+
+.status-dot{
+  position:absolute;
+  right:calc(50% - 75px);
+  bottom:5px;
+  width:18px;
+  height:18px;
+  background:#35e39a;
+  border:3px solid var(--bg);
+  border-radius:50%;
+  box-shadow:0 0 12px #35e39a;
+}
+
+.hero-name{
+  font-family:"Great Vibes",cursive;
+  font-size:clamp(58px,10vw,88px);
+  line-height:1;
+  background:linear-gradient(90deg,#f5d0fe,#fff,#c4b5fd);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero-role{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.22em;
+}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:22px;
+  padding:8px 16px;
+  border:1px solid rgba(168,120,255,.3);
+  border-radius:999px;
+  background:rgba(139,92,246,.15);
+  color:#eadcff;
+  font-size:11px;
+}
+
+.status i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);
+}
+
+.hero-quote{
+  margin:22px auto 0;
+  max-width:600px;
+  color:#c6b8df;
+  line-height:1.8;
+  font-size:14px;
+  font-style:italic;
+}
+
+.hero-buttons{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+
+.btn{
+  border:0;
+  border-radius:999px;
+  padding:13px 24px;
+  font-size:13px;
+  font-weight:800;
+  transition:.25s;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+}
+
+.primary{
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:white;
+  box-shadow:0 0 25px rgba(155,92,246,.4);
+}
+
+.secondary{
+  color:white;
+  background:var(--glass);
+  border:1px solid var(--line);
+}
+
+.socials{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:35px;
+}
+
+.social{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  transition:.25s;
+}
+
+.social:hover{
+  transform:translateY(-4px);
+}
+
+.social svg{
+  width:17px;
+  height:17px;
+}
+
+.fb{background:#1877f2}
+.tiktok{background:#111}
+.ig{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af)}
+.yt{background:#f00}
+.gh{background:#24292e}
+.dc{background:#5865f2}
+
+.scroll{
+  position:absolute;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  color:var(--muted);
+  font-size:10px;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:22px;
+  backdrop-filter:blur(14px);
+  padding:28px 10px;
+}
+
+.stat{
+  text-align:center;
+  border-right:1px solid var(--line);
+}
+
+.stat:last-child{
+  border:0;
+}
+
+.stat-number{
+  font-size:28px;
+  font-weight:900;
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:5px;
+  text-transform:uppercase;
+}
+
+/* ================= ABOUT ================= */
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+}
+
+.about-description{
+  margin-top:25px;
+}
+
+.about-description p{
+  color:var(--muted);
+  line-height:1.9;
+  font-size:14px;
+  margin-bottom:15px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:25px;
+}
+
+.info{
+  padding:15px;
+  border-radius:14px;
+  background:var(--glass);
+  border:1px solid var(--line);
+}
+
+.info small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.info strong{
+  display:block;
+  margin-top:5px;
+  font-size:13px;
+}
+
+/* ================= SKILLS ================= */
+
+.skills{
+  padding:30px;
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:22px;
+  margin-top:25px;
+}
+
+.skill{
+  margin-bottom:20px;
+}
+
+.skill:last-child{
+  margin-bottom:0;
+}
+
+.skill-head{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.skill-head span{
+  color:var(--muted);
+}
+
+.skill-head b{
+  color:#fff;
+}
+
+.skill-bar{
+  height:6px;
+  border-radius:20px;
+  background:rgba(255,255,255,.07);
+  overflow:hidden;
+}
+
+.skill-fill{
+  width:0;
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--purple),var(--pink),var(--cyan));
+  transition:1.5s;
+}
+
+/* ================= HOBBIES ================= */
+
+.hobby-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-top:45px;
+}
+
+.hobby{
+  padding:25px 20px;
+  border:1px solid var(--line);
+  background:var(--glass);
+  border-radius:18px;
+  transition:.3s;
+}
+
+.hobby:hover{
+  transform:translateY(-7px);
+  border-color:rgba(247,138,224,.35);
+}
+
+.hobby-icon{
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(155,92,246,.17);
+  color:var(--pink);
+  font-size:21px;
+  margin-bottom:15px;
+}
+
+.hobby h3{
+  font-size:15px;
+}
+
+.hobby p{
+  margin-top:7px;
+  color:var(--muted);
+  line-height:1.7;
+  font-size:12px;
+}
+
+/* ================= MUSIC ================= */
+
+.music-box{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:25px;
+  padding:30px;
+  border-radius:24px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(155,92,246,.12),
+      rgba(82,217,232,.05)
+    );
+  backdrop-filter:blur(16px);
+}
+
+.album{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,.2);
+  box-shadow:0 0 30px rgba(155,92,246,.4);
+  animation:spin 5s linear infinite;
+}
+
+.album img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.music-title{
+  font-size:20px;
+  font-weight:900;
+}
+
+.music-artist{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.youtube{
+  position:relative;
+  margin-top:18px;
+  width:100%;
+  aspect-ratio:16/9;
+  max-width:650px;
+  border-radius:15px;
+  overflow:hidden;
+  background:#000;
+}
+
+.youtube iframe{
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.music-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.music-btn{
+  border:1px solid var(--line);
+  background:var(--glass);
+  color:white;
+  border-radius:999px;
+  padding:10px 16px;
+}
+
+/* ================= CONTACT ================= */
+
+.contact{
+  text-align:center;
+  padding-bottom:50px;
+}
+
+.contact .section-title{
+  margin-top:20px;
+}
+
+.contact-description{
+  max-width:500px;
+  margin:15px auto 0;
+  color:var(--muted);
+  line-height:1.8;
+  font-size:13px;
+}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:30px 0;
+  text-align:center;
+  color:#6f6088;
+  font-size:11px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:850px){
+
+  .nav-links{
+    display:none;
   }
-  .moon{
-    position:absolute; top:8vh; left:50%; transform:translateX(-50%);
-    width:min(220px,22vw); height:min(220px,22vw); border-radius:50%;
-    background:radial-gradient(circle at 38% 34%, #fff6ff, #e6c9ff 42%, #b98dff 78%);
-    box-shadow:0 0 120px 30px rgba(200,140,255,.35);
-    opacity:.5; filter:blur(.5px);
-    transition:transform .1s linear;
+
+  .menu-btn{
+    display:block;
   }
-  .skyline{position:absolute; left:0; right:0; bottom:0; height:34vh; opacity:.9;}
-  .bld{position:absolute; bottom:0; background:linear-gradient(180deg,#170c2c,#0a0416); border-top:1px solid rgba(180,140,255,.07);}
-  .win{position:absolute; width:3px; height:5px; background:rgba(255,210,255,.5); box-shadow:0 0 4px rgba(255,180,255,.55);}
-  .bloomglow{position:absolute; border-radius:50%; filter:blur(60px); opacity:.35; pointer-events:none;}
- 
-  .petals{position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden;}
-  .petal{
-    position:absolute; top:-5%; border-radius:50% 8% 50% 50%;
-    background:radial-gradient(circle at 30% 30%,#ffe0fb,#f2a6e8 55%,#c977d6);
-    opacity:.75; animation:fall linear infinite;
+
+  .about-grid{
+    grid-template-columns:1fr;
+    gap:35px;
   }
-  @keyframes fall{
-    0%{transform:translateY(-5vh) translateX(0) rotate(0deg);}
-    100%{transform:translateY(108vh) translateX(var(--drift,40px)) rotate(360deg);}
+
+  .hobby-grid{
+    grid-template-columns:1fr 1fr;
   }
- 
-  /* ===================== NAV ===================== */
-  .nav{
-    position:fixed; top:0; left:0; right:0; z-index:50;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px clamp(20px,5vw,64px);
-    transition:background .35s ease, padding .35s ease, border-color .35s ease;
-    border-bottom:1px solid transparent;
-  }
-  .nav.scrolled{
-    background:rgba(8,3,16,.72); backdrop-filter:blur(14px);
-    padding-top:14px; padding-bottom:14px;
-    border-bottom:1px solid var(--line);
-  }
-  .logo{
-    font-family:'Great Vibes', cursive; font-size:26px;
-    background:linear-gradient(90deg,#f5d0fe,#e9d5ff,#c4b5fd);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  .nav-links{display:flex; align-items:center; gap:34px;}
-  .nav-links a{
-    font-size:12.5px; font-weight:600; letter-spacing:.05em; color:var(--muted);
-    position:relative; padding-bottom:4px; transition:color .25s;
-  }
-  .nav-links a::after{
-    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
-    background:linear-gradient(90deg,var(--pink),var(--cyan)); transition:width .3s;
-  }
-  .nav-links a:hover{color:#fff;}
-  .nav-links a:hover::after{width:100%;}
-  .nav-cta{
-    padding:9px 20px; border-radius:999px; font-size:12px; font-weight:700;
-    background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff;
-    box-shadow:0 0 22px rgba(155,92,246,.4); letter-spacing:.03em;
-  }
-  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:60;}
-  .burger span{width:22px; height:2px; background:#fff; border-radius:2px; transition:.3s;}
-  .mobile-menu{
-    position:fixed; inset:0; background:rgba(8,3,18,.97); backdrop-filter:blur(20px);
-    z-index:55; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:28px; transform:translateY(-100%); transition:transform .4s cubic-bezier(.2,.8,.2,1);
-  }
-  .mobile-menu.open{transform:translateY(0);}
-  .mobile-menu a{font-size:20px; font-weight:600; color:var(--text);}
- 
-  /* ===================== LAYOUT HELPERS ===================== */
-  .wrap{position:relative; z-index:2;}
-  .container{max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,64px);}
-  .eyebrow{
-    font-size:11px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
-    color:var(--pink); display:flex; align-items:center; gap:10px;
-  }
-  .eyebrow::before{content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--pink),transparent);}
-  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1);}
-  .reveal.in{opacity:1; transform:translateY(0);}
- 
-  /* ===================== HERO ===================== */
-  .hero{
-    min-height:100vh; display:flex; align-items:center; justify-content:center;
-    text-align:center; padding:140px 20px 80px;
-  }
-  .hero-inner{max-width:640px;}
-  .hero .eyebrow{justify-content:center;}
-  .hero .eyebrow::before{display:none;}
-  .avatar-wrap{display:flex; justify-content:center; margin:22px 0 6px; position:relative;}
-  .avatar{
-    width:132px; height:132px; border-radius:38% 38% 42% 42% / 45% 45% 40% 40%;
-    padding:3px;
-    background:conic-gradient(from 0deg, var(--purple), var(--pink), var(--cyan), var(--purple));
-    box-shadow:0 0 46px rgba(155,92,246,.5);
-  }
-  .avatar-inner{
-    width:100%; height:100%; border-radius:36% 36% 40% 40% / 43% 43% 38% 38%;
-    background:radial-gradient(circle at 50% 30%, rgba(244,114,240,.25), transparent 60%), linear-gradient(180deg,#241238,#100822);
-    border:2px solid #0e0620; overflow:hidden; position:relative;
-  }
-  .portrait{position:absolute; inset:0;}
-  .status-dot{
-    position:absolute; width:17px; height:17px; border-radius:50%;
-    background:#34d399; border:3px solid var(--bg0); right:calc(50% - 60px); bottom:6px;
-    box-shadow:0 0 10px #34d399;
-  }
-  .name{
-    font-family:'Great Vibes', cursive; font-size:clamp(48px,9vw,78px); line-height:1;
-    margin-top:6px;
-    background:linear-gradient(90deg,#f5d0fe,#e9d5ff 40%,#c4b5fd);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow:0 0 30px rgba(196,181,253,.35);
-  }
-  .role{margin-top:8px; font-size:12.5px; letter-spacing:.22em; font-weight:700; color:var(--muted);}
-  .status-pill{display:flex; justify-content:center; margin-top:20px;}
-  .status-pill span{
-    display:inline-flex; align-items:center; gap:7px; padding:7px 16px; border-radius:999px;
-    background:rgba(139,92,246,.16); border:1px solid rgba(168,120,255,.35);
-    font-size:11px; font-weight:600; color:#e9d8ff;
-  }
-  .status-pill .dt{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
-  .quote{margin-top:20px; font-size:14px; line-height:1.8; color:#c3b6e0; font-style:italic;}
-  .hero-ctas{display:flex; gap:14px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
-  .btn{
-    padding:13px 26px; border-radius:999px; font-size:13px; font-weight:700; letter-spacing:.02em;
-    transition:transform .25s ease, box-shadow .25s ease;
-  }
-  .btn.primary{background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff; box-shadow:0 0 26px rgba(155,92,246,.4);}
-  .btn.ghost{border:1px solid var(--line); color:var(--text); background:var(--glass); backdrop-filter:blur(6px);}
-  .btn:hover{transform:translateY(-2px);}
-  .socials{display:flex; justify-content:center; gap:10px; margin-top:34px;}
-  .soc{width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; transition:.2s;}
-  .soc svg{width:16px;height:16px;}
-  .soc:hover{transform:translateY(-3px);}
-  .soc.fb{background:linear-gradient(135deg,#1877f2,#0d5cd6);}
-  .soc.tiktok{background:#111;}
-  .soc.ig{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4);}
-  .soc.yt{background:#ff0000;}
-  .soc.gh{background:#24292e;}
-  .soc.dc{background:#5865f2;}
- 
-  .scroll-cue{
-    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
-    display:flex; flex-direction:column; align-items:center; gap:8px;
-    font-size:9.5px; letter-spacing:.18em; color:var(--muted); text-transform:uppercase;
-  }
-  .scroll-cue .line{width:1px; height:34px; background:linear-gradient(180deg,var(--pink),transparent); animation:cue 1.8s ease-in-out infinite;}
-  @keyframes cue{0%{opacity:.2; transform:scaleY(.4); transform-origin:top;} 50%{opacity:1; transform:scaleY(1); transform-origin:top;} 100%{opacity:.2; transform:scaleY(.4); transform-origin:top;}}
- 
-  /* ===================== STATS STRIP ===================== */
-  .stats-strip{padding:0 20px;}
+
   .stats{
-    max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr);
-    background:rgba(255,255,255,.035); border:1px solid var(--line); border-radius:20px;
-    padding:26px 10px; backdrop-filter:blur(14px);
+    grid-template-columns:1fr 1fr;
+    gap:20px;
   }
-  .stats .item{text-align:center; border-right:1px solid var(--line);}
-  .stats .item:last-child{border-right:none;}
-  .stats .num{font-size:clamp(20px,3vw,28px); font-weight:800; color:#fff;}
-  .stats .lbl{font-size:9.5px; color:var(--muted); letter-spacing:.06em; margin-top:4px; text-transform:uppercase;}
- 
-  /* ===================== SECTION SHELL ===================== */
-  section{padding:110px 0;}
-  .section-head{max-width:560px; margin-bottom:50px;}
-  .section-title{font-size:clamp(28px,4vw,42px); font-weight:800; margin-top:12px; letter-spacing:-.01em;}
-  .section-title em{
-    font-family:'Great Vibes', cursive; font-style:normal; font-size:1.25em;
-    background:linear-gradient(90deg,var(--pink),var(--cyan));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+
+  .stat:nth-child(2){
+    border:0;
   }
- 
-  /* ===================== ABOUT + SKILLS ===================== */
-  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;}
-  .about-text p{font-size:15px; line-height:1.85; color:var(--muted); margin-bottom:16px;}
-  .about-text strong{color:#fff;}
-  .about-cards{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:26px;}
-  .info-card{background:var(--glass); border:1px solid var(--line); border-radius:14px; padding:14px 16px; backdrop-filter:blur(10px);}
-  .info-card .k{font-size:9px; letter-spacing:.12em; color:var(--muted); text-transform:uppercase;}
-  .info-card .v{font-size:13.5px; font-weight:700; margin-top:4px; color:#fff;}
- 
-  .skills-panel{background:var(--glass); border:1px solid var(--line); border-radius:22px; padding:32px; backdrop-filter:blur(14px);}
-  .skill{margin-bottom:20px;}
-  .skill:last-child{margin-bottom:0;}
-  .skill-top{display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:8px; color:var(--muted);}
-  .skill-top b{color:#fff; font-weight:700;}
-  .bar{height:6px; border-radius:99px; background:rgba(255,255,255,.07); overflow:hidden;}
-  .bar i{display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,var(--purple),var(--pink),var(--cyan)); width:0%; transition:width 1.6s cubic-bezier(.2,.8,.2,1);}
- 
-  /* ===================== HOBBIES ===================== */
-  .hobby-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
-  .hobby-card{
-    background:var(--glass); border:1px solid var(--line); border-radius:18px; padding:26px 20px;
-    transition:transform .3s ease, border-color .3s ease, background .3s ease;
+
+  .music-box{
+    grid-template-columns:1fr;
+    text-align:center;
   }
-  .hobby-card:hover{transform:translateY(-6px); border-color:rgba(244,114,240,.35); background:rgba(255,255,255,.06);}
-  .hobby-card .ic{
-    width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg,rgba(155,92,246,.25),rgba(244,114,240,.2)); color:var(--pink); margin-bottom:16px;
+
+  .album{
+    margin:auto;
   }
-  .hobby-card .ic svg{width:20px;height:20px;}
-  .hobby-card h4{font-size:15px; font-weight:700; margin-bottom:6px;}
-  .hobby-card p{font-size:12.5px; color:var(--muted); line-height:1.6;}
- 
-  /* ===================== MUSIC ===================== */
-  .music-panel{
-    background:linear-gradient(135deg,rgba(155,92,246,.1),rgba(79,216,238,.06));
-    border:1px solid var(--line); border-radius:24px; padding:34px clamp(20px,4vw,48px);
-    display:flex; align-items:center; gap:26px; flex-wrap:wrap; backdrop-filter:blur(16px);
+
+  .music-actions{
+    justify-content:center;
   }
-  .album{width:64px;height:64px;border-radius:50%; background:conic-gradient(#3a2a5c,#150a28 60%,#3a2a5c); border:2px solid rgba(255,255,255,.15); flex:0 0 auto; animation:spin 5s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  .track{flex:1; min-width:160px;}
-  .track .eyebrow{margin-bottom:6px;}
-  .track .t{font-size:19px; font-weight:800; color:#fff;}
-  .track .a{font-size:12.5px; color:var(--muted); margin-top:2px;}
-  .track .progress{margin-top:14px; max-width:320px;}
-  .track .bar2{height:4px; border-radius:99px; background:rgba(255,255,255,.1); position:relative;}
-  .track .bar2 i{position:absolute; left:0; top:0; height:100%; width:32%; border-radius:99px; background:linear-gradient(90deg,var(--cyan),var(--pink));}
-  .track .times{display:flex; justify-content:space-between; font-size:10.5px; color:var(--muted); margin-top:6px;}
-  .controls{display:flex; align-items:center; gap:16px;}
-  .controls .cbtn{color:var(--muted); cursor:pointer; display:flex;}
-  .controls svg{width:16px;height:16px;}
-  .controls .play{width:46px;height:46px;border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--pink)); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 0 20px rgba(155,92,246,.55); cursor:pointer;}
-  .controls .play svg{width:16px;height:16px;}
-  .wave{display:flex; align-items:flex-end; gap:2px; height:30px; flex:0 0 auto;}
-  .wave i{width:2.4px; border-radius:2px; background:linear-gradient(180deg,var(--cyan),var(--pink)); animation:wv 1.1s ease-in-out infinite;}
-  @keyframes wv{0%,100%{transform:scaleY(.3);} 50%{transform:scaleY(1);}}
- 
-  /* ===================== FOOTER ===================== */
-  footer{padding:80px 0 40px; text-align:center; border-top:1px solid var(--line); margin-top:40px;}
-  footer .name{font-size:clamp(34px,6vw,52px); margin-bottom:6px;}
-  footer p{color:var(--muted); font-size:13px; max-width:420px; margin:0 auto 24px;}
-  footer .copy{margin-top:40px; font-size:11px; color:#6f6088; letter-spacing:.03em;}
- 
-  /* ===================== RESPONSIVE ===================== */
-  @media (max-width:860px){
-    .nav-links{display:none;}
-    .burger{display:flex;}
-    .about-grid{grid-template-columns:1fr; gap:36px;}
-    .hobby-grid{grid-template-columns:1fr 1fr;}
-    .stats{grid-template-columns:repeat(2,1fr); row-gap:18px;}
-    .stats .item:nth-child(2){border-right:none;}
+
+  .youtube{
+    margin-left:auto;
+    margin-right:auto;
   }
-  @media (max-width:520px){
-    .hobby-grid{grid-template-columns:1fr;}
-    section{padding:80px 0;}
-    .music-panel{flex-direction:column; align-items:stretch; text-align:center;}
-    .controls{justify-content:center;}
+}
+
+@media(max-width:550px){
+
+  section{
+    padding:80px 0;
   }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+
+  .container{
+    width:min(100% - 30px,1180px);
   }
-  :focus-visible{outline:2px solid var(--cyan); outline-offset:3px; border-radius:4px;}
+
+  .hero{
+    padding-top:120px;
+  }
+
+  .hero-role{
+    font-size:10px;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hobby-grid{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .stat{
+    border:0;
+  }
+
+  .music-box{
+    padding:22px;
+  }
+}
 </style>
 </head>
+
 <body>
- 
-<div class="atmosphere">
-  <div class="sky"></div>
-  <div class="moon" id="moon"></div>
-  <div class="skyline" id="skyline"></div>
-  <div class="bloomglow" style="width:340px;height:340px;left:-80px;top:20px;background:#c77bff;"></div>
-  <div class="bloomglow" style="width:300px;height:300px;right:-80px;top:0;background:#ff9be8;"></div>
+
+<div class="background">
+  <div class="moon"></div>
+  <div class="cover-bg" id="coverBackground"></div>
 </div>
-<div class="petals" id="petals"></div>
- 
+
+<div id="petals"></div>
+
 <nav class="nav" id="nav">
-  <a href="#top" class="logo">Xuân Bách</a>
+  <a href="#top" class="logo" id="navName">Xuân Bách</a>
+
   <div class="nav-links">
     <a href="#about">Về mình</a>
     <a href="#skills">Kỹ năng</a>
     <a href="#hobbies">Sở thích</a>
     <a href="#music">Đang nghe</a>
-    <a href="#contact" class="nav-cta">Liên hệ</a>
+    <a href="#contact">Liên hệ</a>
   </div>
-  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+
+  <button class="menu-btn" id="menuBtn">☰</button>
 </nav>
- 
+
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">Về mình</a>
   <a href="#skills">Kỹ năng</a>
@@ -326,303 +853,1013 @@
   <a href="#music">Đang nghe</a>
   <a href="#contact">Liên hệ</a>
 </div>
- 
-<div class="wrap" id="top">
- 
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="eyebrow">Xin chào, mình là</div>
-      <div class="avatar-wrap">
-        <div class="avatar">
-          <div class="avatar-inner">
-            <svg class="portrait" viewBox="0 0 100 100" preserveAspectRatio="xMidYMax slice">
-              <rect width="100" height="100" fill="url(#g1)"/>
-              <defs>
-                <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#2a1642"/>
-                  <stop offset="100%" stop-color="#120a22"/>
-                </linearGradient>
-              </defs>
-              <ellipse cx="50" cy="98" rx="34" ry="30" fill="#1c1030"/>
-              <ellipse cx="50" cy="52" rx="20" ry="22" fill="#e8c9b0"/>
-              <path d="M28 45 Q30 15 50 15 Q70 15 72 45 Q60 30 50 30 Q40 30 28 45Z" fill="#171018"/>
-              <rect x="34" y="55" width="32" height="16" rx="8" fill="#0d0d10"/>
-              <circle cx="42" cy="50" r="2" fill="#dff3ff"/>
-              <circle cx="58" cy="50" r="2" fill="#dff3ff"/>
-            </svg>
-          </div>
-        </div>
-        <div class="status-dot"></div>
+
+<main class="wrap" id="top">
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="eyebrow">Xin chào, mình là</div>
+
+    <div class="avatar-wrap">
+      <div class="avatar">
+        <img id="avatar" alt="Avatar">
       </div>
-      <h1 class="name">Xuân Bách</h1>
-      <div class="role">DEVELOPER · DESIGNER · DREAMER</div>
-      <div class="status-pill"><span><i class="dt"></i>Đang học hỏi mỗi ngày ⚡</span></div>
-      <p class="quote">"Không ngừng cố gắng, không ngừng tiến về phía trước — mọi thứ rồi sẽ đến."</p>
-      <div class="hero-ctas">
-        <a href="#skills" class="btn primary">Xem kỹ năng</a>
-        <a href="#contact" class="btn ghost">Liên hệ với mình</a>
-      </div>
-      <div class="socials">
-        <div class="soc fb" data-i="fb"></div>
-        <div class="soc tiktok" data-i="tiktok"></div>
-        <div class="soc ig" data-i="ig"></div>
-        <div class="soc yt" data-i="yt"></div>
-        <div class="soc gh" data-i="gh"></div>
-        <div class="soc dc" data-i="dc"></div>
-      </div>
+      <div class="status-dot"></div>
     </div>
-    <div class="scroll-cue"><span>Cuộn xuống</span><span class="line"></span></div>
-  </section>
- 
-  <div class="stats-strip reveal">
-    <div class="stats">
-      <div class="item"><div class="num">20+</div><div class="lbl">Dự án</div></div>
-      <div class="item"><div class="num">1.2K+</div><div class="lbl">Followers</div></div>
-      <div class="item"><div class="num">5+</div><div class="lbl">Năm kinh nghiệm</div></div>
-      <div class="item"><div class="num">∞</div><div class="lbl">Đam mê</div></div>
+
+    <h1 class="hero-name" id="heroName">Xuân Bách</h1>
+
+    <div class="hero-role" id="heroRole">
+      DEVELOPER · DESIGNER · DREAMER
     </div>
+
+    <div class="status">
+      <i></i>
+      <span id="heroStatus">Đang học hỏi mỗi ngày ⚡</span>
+    </div>
+
+    <p class="hero-quote" id="heroQuote">
+      Không ngừng cố gắng, không ngừng tiến về phía trước — mọi thứ rồi sẽ đến.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#skills" class="btn primary">Xem kỹ năng</a>
+      <a href="#contact" class="btn secondary">Liên hệ với mình</a>
+    </div>
+
+    <div class="socials" id="heroSocials"></div>
+
   </div>
- 
-  <section id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="reveal">
-          <div class="eyebrow">Giới thiệu</div>
-          <h2 class="section-title">Về <em>mình</em></h2>
-          <div class="about-text" style="margin-top:22px;">
-            <p>Mình là lập trình viên đam mê <strong>Frontend</strong>, thích thiết kế đẹp và tối ưu trải nghiệm người dùng. Với mình, một sản phẩm tốt là nơi công nghệ và thẩm mỹ gặp nhau.</p>
-            <p>Ngoài giờ code, mình còn thích chụp ảnh phong cảnh, nghe nhạc lo-fi lúc đêm khuya và luôn tò mò về những công nghệ mới.</p>
-          </div>
-          <div class="about-cards">
-            <div class="info-card"><div class="k">Vị trí</div><div class="v">Việt Nam</div></div>
-            <div class="info-card"><div class="k">Trạng thái</div><div class="v">Sẵn sàng nhận việc</div></div>
-            <div class="info-card"><div class="k">Hướng đi</div><div class="v">Frontend & UI/UX</div></div>
-            <div class="info-card"><div class="k">Ngôn ngữ</div><div class="v">Tiếng Việt, English</div></div>
-          </div>
-        </div>
- 
-        <div class="reveal" id="skills">
-          <div class="eyebrow">Chuyên môn</div>
-          <h2 class="section-title">Kỹ <em>năng</em></h2>
-          <div class="skills-panel" style="margin-top:22px;">
-            <div class="skill"><div class="skill-top"><span>HTML / CSS</span><b>0%</b></div><div class="bar"><i data-w="90"></i></div></div>
-            <div class="skill"><div class="skill-top"><span>JavaScript</span><b>0%</b></div><div class="bar"><i data-w="80"></i></div></div>
-            <div class="skill"><div class="skill-top"><span>ReactJS</span><b>75%</b></div><div class="bar"><i data-w="75"></i></div></div>
-            <div class="skill"><div class="skill-top"><span>UI/UX Design</span><b>70%</b></div><div class="bar"><i data-w="70"></i></div></div>
-            <div class="skill"><div class="skill-top"><span>C++ / Python</span><b>60%</b></div><div class="bar"><i data-w="60"></i></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
- 
-  <section id="hobbies">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="eyebrow">Ngoài công việc</div>
-        <h2 class="section-title">Sở <em>thích</em></h2>
-      </div>
-      <div class="hobby-grid reveal">
-        <div class="hobby-card">
-          <div class="ic" data-i="game"></div>
-          <h4>Chơi Game</h4>
-          <p>FPS, MOBA, RPG — thư giãn sau những giờ code căng thẳng.</p>
-        </div>
-        <div class="hobby-card">
-          <div class="ic" data-i="music"></div>
-          <h4>Nghe Nhạc</h4>
-          <p>Lo-fi, Chill, EDM — nguồn cảm hứng khi làm việc về đêm.</p>
-        </div>
-        <div class="hobby-card">
-          <div class="ic" data-i="tech"></div>
-          <h4>Công Nghệ</h4>
-          <p>Luôn cập nhật AI, Web, App — tò mò với mọi điều mới.</p>
-        </div>
-        <div class="hobby-card">
-          <div class="ic" data-i="cam"></div>
-          <h4>Chụp Ảnh</h4>
-          <p>Photography & Edit — ghi lại những khoảnh khắc đẹp.</p>
-        </div>
-      </div>
-    </div>
-  </section>
- 
-  <section id="music">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="eyebrow">Bây giờ</div>
-        <h2 class="section-title">Đang <em>nghe</em></h2>
-      </div>
-      <div class="music-panel reveal">
-        <div class="album"></div>
-        <div class="track">
-          <div class="eyebrow">Now playing</div>
-          <div class="t">Not Alone</div>
-          <div class="a">Bảo Vy</div>
-          <div class="progress">
-            <div class="bar2"><i></i></div>
-            <div class="times"><span>1:24</span><span>4:28</span></div>
-          </div>
-        </div>
-        <div class="controls">
-          <div class="cbtn" data-i="prev"></div>
-          <div class="play" data-i="play"></div>
-          <div class="cbtn" data-i="next"></div>
-        </div>
-        <div class="wave" id="wave"></div>
-      </div>
-    </div>
-  </section>
- 
-  <footer id="contact">
-    <div class="container">
+
+  <div class="scroll">CUỘN XUỐNG ↓</div>
+</section>
+
+<!-- STATS -->
+
+<section style="padding-top:0">
+  <div class="container">
+    <div class="stats reveal" id="stats"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+  <div class="container">
+
+    <div class="about-grid">
+
       <div class="reveal">
-        <div class="eyebrow" style="justify-content:center;">Kết nối</div>
-        <div class="name">Hãy nói chuyện nhé</div>
-        <p>Luôn sẵn sàng cho những dự án mới, ý tưởng thú vị hoặc đơn giản là một lời chào.</p>
-        <div class="socials">
-          <div class="soc fb" data-i="fb"></div>
-          <div class="soc tiktok" data-i="tiktok"></div>
-          <div class="soc ig" data-i="ig"></div>
-          <div class="soc yt" data-i="yt"></div>
-          <div class="soc gh" data-i="gh"></div>
-          <div class="soc dc" data-i="dc"></div>
+
+        <div class="eyebrow">Giới thiệu</div>
+        <h2 class="section-title">Về <em>mình</em></h2>
+
+        <div class="about-description">
+          <p id="about1"></p>
+          <p id="about2"></p>
         </div>
-        <div class="copy">© 2026 Xuân Bách. Made with 💜 at night.</div>
+
+        <div class="info-grid" id="infoGrid"></div>
+
       </div>
+
+      <div class="reveal" id="skills">
+
+        <div class="eyebrow">Chuyên môn</div>
+        <h2 class="section-title">Kỹ <em>năng</em></h2>
+
+        <div class="skills" id="skillsList"></div>
+
+      </div>
+
     </div>
-  </footer>
- 
-</div>
- 
+
+  </div>
+</section>
+
+<!-- HOBBIES -->
+
+<section id="hobbies">
+  <div class="container">
+
+    <div class="reveal">
+      <div class="eyebrow">Ngoài công việc</div>
+      <h2 class="section-title">Sở <em>thích</em></h2>
+    </div>
+
+    <div class="hobby-grid reveal" id="hobbyList"></div>
+
+  </div>
+</section>
+
+<!-- MUSIC -->
+
+<section id="music">
+  <div class="container">
+
+    <div class="reveal">
+      <div class="eyebrow">Bây giờ</div>
+      <h2 class="section-title">Đang <em>nghe</em></h2>
+    </div>
+
+    <div class="music-box reveal">
+
+      <div class="album">
+        <img id="albumImage" alt="Album">
+      </div>
+
+      <div>
+
+        <div class="eyebrow">NOW PLAYING</div>
+
+        <div class="music-title" id="musicTitle"></div>
+        <div class="music-artist" id="musicArtist"></div>
+
+        <div class="youtube" id="youtubePlayer"></div>
+
+      </div>
+
+      <div class="music-actions">
+        <button class="music-btn" id="openYoutube">
+          ▶ YouTube
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section class="contact" id="contact">
+  <div class="container reveal">
+
+    <div class="eyebrow">Kết nối</div>
+
+    <h2 class="section-title">
+      Hãy nói <em>chuyện nhé</em>
+    </h2>
+
+    <p class="contact-description" id="contactDescription"></p>
+
+    <div class="socials" id="footerSocials"></div>
+
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span>
+  <span id="footerName">Xuân Bách</span>.
+  Made with 💜 at night.
+</footer>
+
+</main>
+
 <script>
-const ICONS = {
-  fb:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>',
-  tiktok:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.2c-.9-.9-1.4-2.1-1.4-3.4h-3.1v14.3c0 1.5-1.2 2.7-2.7 2.7s-2.7-1.2-2.7-2.7 1.2-2.7 2.7-2.7c.3 0 .6.1.9.1v-3.2c-.3 0-.6-.1-.9-.1-3.2 0-5.8 2.6-5.8 5.9s2.6 5.9 5.8 5.9 5.8-2.6 5.8-5.9V9.1c1.2.9 2.7 1.4 4.3 1.4V7.4c-1 0-1.9-.4-2.7-1.1z"/></svg>',
-  ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
-  yt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.6-.5-5.3c-.3-1-1-1.7-2-2C18.7 4.2 12 4.2 12 4.2s-6.7 0-8.5.5c-1 .3-1.7 1-2 2C1 8.4 1 12 1 12s0 3.6.5 5.3c.3 1 1 1.7 2 2 1.8.5 8.5.5 8.5.5s6.7 0 8.5-.5c1-.3 1.7-1 2-2 .5-1.7.5-5.3.5-5.3zM9.7 15.3V8.7l6 3.3-6 3.3z"/></svg>',
-  gh:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.3-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7 1 .7 2v2.9c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>',
-  dc:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 5.4A17.6 17.6 0 0 0 15.6 4l-.3.5a13 13 0 0 1 3.6 1.3 13.7 13.7 0 0 0-14 0A13 13 0 0 1 8.5 4.5L8.2 4A17.6 17.6 0 0 0 3.8 5.4C1.4 9 .7 12.5 1 16a17.7 17.7 0 0 0 5.3 2.6l.7-1.2a11.3 11.3 0 0 1-1.8-.9l.4-.3a12.7 12.7 0 0 0 10.6 0l.4.3a11.3 11.3 0 0 1-1.8.9l.7 1.2A17.6 17.6 0 0 0 21 16c.4-4-.6-7.5-1-10.6zM8.7 14c-.8 0-1.4-.7-1.4-1.6s.6-1.6 1.4-1.6 1.5.7 1.4 1.6c0 .9-.6 1.6-1.4 1.6zm6.6 0c-.8 0-1.4-.7-1.4-1.6s.6-1.6 1.4-1.6 1.4.7 1.4 1.6-.6 1.6-1.4 1.6z"/></svg>',
-  prev:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 5l-11 7 11 7V5zM6 5H4v14h2z"/></svg>',
-  next:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 5l11 7-11 7V5zM18 5h2v14h-2z"/></svg>',
-  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z"/></svg>',
-  pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>',
-  game:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>',
-  music:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
-  tech:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>',
-  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>'
+/* =====================================================
+   DEFAULT DATA
+===================================================== */
+
+const DEFAULT_DATA = {
+
+  profile:{
+    name:"Xuân Bách",
+    role:"DEVELOPER · DESIGNER · DREAMER",
+    avatar:"",
+    cover:"",
+    status:"Đang học hỏi mỗi ngày ⚡",
+    quote:"Không ngừng cố gắng, không ngừng tiến về phía trước — mọi thứ rồi sẽ đến."
+  },
+
+  about:{
+    description1:"Mình là lập trình viên đam mê Frontend, thích thiết kế đẹp và tối ưu trải nghiệm người dùng. Với mình, một sản phẩm tốt là nơi công nghệ và thẩm mỹ gặp nhau.",
+    description2:"Ngoài giờ code, mình còn thích chụp ảnh phong cảnh, nghe nhạc lo-fi lúc đêm khuya và luôn tò mò về những công nghệ mới.",
+    location:"Việt Nam",
+    status:"Sẵn sàng nhận việc",
+    direction:"Frontend & UI/UX",
+    languages:"Tiếng Việt, English"
+  },
+
+  stats:[
+    {number:"20+",label:"Dự án"},
+    {number:"1.2K+",label:"Followers"},
+    {number:"5+",label:"Năm kinh nghiệm"},
+    {number:"∞",label:"Đam mê"}
+  ],
+
+  skills:[
+    {name:"HTML / CSS",percent:90},
+    {name:"JavaScript",percent:80},
+    {name:"ReactJS",percent:75},
+    {name:"UI/UX Design",percent:70},
+    {name:"C++ / Python",percent:60}
+  ],
+
+  hobbies:[
+    {
+      icon:"🎮",
+      name:"Chơi Game",
+      description:"FPS, MOBA, RPG — thư giãn sau những giờ code căng thẳng."
+    },
+    {
+      icon:"🎧",
+      name:"Nghe Nhạc",
+      description:"Lo-fi, Chill, EDM — nguồn cảm hứng khi làm việc về đêm."
+    },
+    {
+      icon:"💻",
+      name:"Công Nghệ",
+      description:"Luôn cập nhật AI, Web, App — tò mò với mọi điều mới."
+    },
+    {
+      icon:"📷",
+      name:"Chụp Ảnh",
+      description:"Photography & Edit — ghi lại những khoảnh khắc đẹp."
+    }
+  ],
+
+  social:{
+    facebook:"",
+    tiktok:"",
+    instagram:"",
+    youtube:"",
+    github:"",
+    discord:""
+  },
+
+  contact:{
+    description:"Luôn sẵn sàng cho những dự án mới, ý tưởng thú vị hoặc đơn giản là một lời chào."
+  },
+
+  music:{
+    title:"Dai Dai",
+    artist:"Shakira & Burna Boy",
+    youtube:"https://www.youtube.com/watch?v=fcnDmrtj6Sk",
+    album:""
+  },
+
+  theme:{
+    purple:"#9b5cf6",
+    pink:"#f78ae0",
+    cyan:"#52d9e8"
+  }
 };
-document.querySelectorAll('[data-i]').forEach(el=>{
-  const key = el.getAttribute('data-i');
-  if(ICONS[key]) el.innerHTML = ICONS[key];
-});
-document.querySelector('.play').innerHTML = ICONS.play;
- 
-/* play/pause */
-let playing = true;
-document.querySelector('.play').addEventListener('click', function(){
-  playing = !playing;
-  this.innerHTML = playing ? ICONS.play : ICONS.pause;
-  document.querySelectorAll('.wave i').forEach(w=> w.style.animationPlayState = playing ? 'running' : 'paused');
-  document.querySelector('.album').style.animationPlayState = playing ? 'running' : 'paused';
-});
- 
-/* nav scroll state + mobile menu */
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', ()=>{
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-  const moon = document.getElementById('moon');
-  moon.style.transform = `translateX(-50%) translateY(${window.scrollY*0.08}px)`;
-}, {passive:true});
- 
-const burger = document.getElementById('burger');
-const mobileMenu = document.getElementById('mobileMenu');
-burger.addEventListener('click', ()=> mobileMenu.classList.toggle('open'));
-mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> mobileMenu.classList.remove('open')));
- 
-/* skill bars fill on view */
-const skillObserver = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.querySelectorAll('.bar i').forEach(b=>{
-        const w = b.getAttribute('data-w');
-        b.style.width = w + '%';
-      });
-      skillObserver.unobserve(e.target);
+
+
+/* =====================================================
+   LOAD DATA
+===================================================== */
+
+function getData(){
+
+  try{
+
+    const saved = localStorage.getItem("xuanbach_portfolio");
+
+    if(!saved){
+      return structuredClone(DEFAULT_DATA);
     }
-  });
-},{threshold:.3});
-document.querySelectorAll('.skills-panel').forEach(p=> skillObserver.observe(p));
- 
-/* scroll reveal */
-const revealObserver = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target); }
-  });
-},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=> revealObserver.observe(el));
- 
-/* wave bars */
-const wave = document.getElementById('wave');
-for(let i=0;i<32;i++){
-  const bar = document.createElement('i');
-  bar.style.height = (6 + Math.random()*18) + 'px';
-  bar.style.animationDelay = (Math.random()*1.2) + 's';
-  bar.style.animationDuration = (0.8 + Math.random()*0.8) + 's';
-  wave.appendChild(bar);
-}
- 
-/* procedural full-width city skyline */
-function buildSkyline(){
-  const skyline = document.getElementById('skyline');
-  skyline.innerHTML = '';
-  const width = window.innerWidth;
-  const bCount = Math.max(18, Math.round(width/60));
-  for(let i=0;i<bCount;i++){
-    const b = document.createElement('div');
-    b.className='bld';
-    const w = 22 + Math.random()*34;
-    const h = 60 + Math.random()*180;
-    b.style.width = w+'px';
-    b.style.height = h+'px';
-    b.style.left = (i*(width/bCount) + Math.random()*10) + 'px';
-    skyline.appendChild(b);
-    const winCount = Math.floor(h/12);
-    for(let j=0;j<winCount;j++){
-      if(Math.random() > 0.55){
-        const win = document.createElement('div');
-        win.className='win';
-        win.style.left = (Math.random()*(w-8)+3)+'px';
-        win.style.bottom = (Math.random()*(h-8)+3)+'px';
-        win.style.background = Math.random() > 0.5 ? 'rgba(255,210,255,.6)' : 'rgba(150,220,255,.5)';
-        b.appendChild(win);
-      }
-    }
+
+    const parsed = JSON.parse(saved);
+
+    return merge(
+      structuredClone(DEFAULT_DATA),
+      parsed
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    return structuredClone(DEFAULT_DATA);
+
   }
 }
-buildSkyline();
-let resizeT;
-window.addEventListener('resize', ()=>{ clearTimeout(resizeT); resizeT = setTimeout(buildSkyline, 250); });
- 
-/* continuous falling petals across full viewport */
-function spawnPetal(){
-  const layer = document.getElementById('petals');
-  const p = document.createElement('div');
-  p.className = 'petal';
-  const s = 6 + Math.random()*9;
-  p.style.width = s+'px';
-  p.style.height = s+'px';
-  p.style.left = Math.random()*100 + 'vw';
-  p.style.setProperty('--drift', (Math.random()*120-60)+'px');
-  const dur = 9 + Math.random()*9;
-  p.style.animationDuration = dur+'s';
-  p.style.opacity = 0.4 + Math.random()*0.5;
-  layer.appendChild(p);
-  setTimeout(()=> p.remove(), dur*1000 + 200);
+
+
+function merge(target,source){
+
+  for(const key in source){
+
+    if(
+      source[key] &&
+      typeof source[key] === "object" &&
+      !Array.isArray(source[key])
+    ){
+
+      target[key] = merge(
+        target[key] || {},
+        source[key]
+      );
+
+    }else{
+
+      target[key] = source[key];
+
+    }
+
+  }
+
+  return target;
 }
-for(let i=0;i<14;i++) setTimeout(spawnPetal, i*300);
-setInterval(spawnPetal, 900);
+
+
+let data = getData();
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render(){
+
+  applyTheme();
+
+  renderProfile();
+
+  renderStats();
+
+  renderAbout();
+
+  renderSkills();
+
+  renderHobbies();
+
+  renderSocials();
+
+  renderMusic();
+
+}
+
+
+function renderProfile(){
+
+  document.title =
+    data.profile.name +
+    " — " +
+    data.profile.role;
+
+  document.getElementById("navName").textContent =
+    data.profile.name;
+
+  document.getElementById("heroName").textContent =
+    data.profile.name;
+
+  document.getElementById("heroRole").textContent =
+    data.profile.role;
+
+  document.getElementById("heroStatus").textContent =
+    data.profile.status;
+
+  document.getElementById("heroQuote").textContent =
+    '"' + data.profile.quote + '"';
+
+  document.getElementById("footerName").textContent =
+    data.profile.name;
+
+  const avatar =
+    document.getElementById("avatar");
+
+  avatar.src =
+    data.profile.avatar ||
+    makeAvatar(data.profile.name);
+
+  const cover =
+    document.getElementById("coverBackground");
+
+  if(data.profile.cover){
+
+    cover.style.backgroundImage =
+      `url("${data.profile.cover}")`;
+
+    cover.classList.add("active");
+
+  }else{
+
+    cover.classList.remove("active");
+
+  }
+
+}
+
+
+function makeAvatar(name){
+
+  const initials =
+    name
+      .split(" ")
+      .map(x=>x[0])
+      .slice(-2)
+      .join("")
+      .toUpperCase();
+
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="500"
+       height="500">
+    <defs>
+      <linearGradient id="g"
+        x1="0" y1="0"
+        x2="1" y2="1">
+        <stop stop-color="#9b5cf6"/>
+        <stop offset=".55" stop-color="#f78ae0"/>
+        <stop offset="1" stop-color="#52d9e8"/>
+      </linearGradient>
+    </defs>
+
+    <rect width="500" height="500"
+      rx="150" fill="#130820"/>
+
+    <circle cx="250" cy="250"
+      r="180"
+      fill="url(#g)"
+      opacity=".22"/>
+
+    <text x="250"
+      y="300"
+      text-anchor="middle"
+      fill="white"
+      font-size="120"
+      font-family="Arial"
+      font-weight="bold">
+      ${initials}
+    </text>
+  </svg>`;
+
+  return "data:image/svg+xml;charset=UTF-8,"+
+    encodeURIComponent(svg);
+}
+
+
+function renderStats(){
+
+  const el =
+    document.getElementById("stats");
+
+  el.innerHTML =
+    data.stats.map(item=>`
+
+      <div class="stat">
+
+        <div class="stat-number">
+          ${escapeHtml(item.number)}
+        </div>
+
+        <div class="stat-label">
+          ${escapeHtml(item.label)}
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function renderAbout(){
+
+  document.getElementById("about1").textContent =
+    data.about.description1;
+
+  document.getElementById("about2").textContent =
+    data.about.description2;
+
+  const info = [
+
+    ["Vị trí",data.about.location],
+
+    ["Trạng thái",data.about.status],
+
+    ["Hướng đi",data.about.direction],
+
+    ["Ngôn ngữ",data.about.languages]
+
+  ];
+
+  document.getElementById("infoGrid").innerHTML =
+    info.map(x=>`
+
+      <div class="info">
+
+        <small>${escapeHtml(x[0])}</small>
+
+        <strong>${escapeHtml(x[1])}</strong>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function renderSkills(){
+
+  const el =
+    document.getElementById("skillsList");
+
+  el.innerHTML =
+    data.skills.map(skill=>`
+
+      <div class="skill">
+
+        <div class="skill-head">
+
+          <span>
+            ${escapeHtml(skill.name)}
+          </span>
+
+          <b>
+            ${Number(skill.percent)||0}%
+          </b>
+
+        </div>
+
+        <div class="skill-bar">
+
+          <div
+            class="skill-fill"
+            data-percent="${Number(skill.percent)||0}">
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function renderHobbies(){
+
+  const el =
+    document.getElementById("hobbyList");
+
+  el.innerHTML =
+    data.hobbies.map(item=>`
+
+      <article class="hobby">
+
+        <div class="hobby-icon">
+          ${escapeHtml(item.icon)}
+        </div>
+
+        <h3>
+          ${escapeHtml(item.name)}
+        </h3>
+
+        <p>
+          ${escapeHtml(item.description)}
+        </p>
+
+      </article>
+
+    `).join("");
+
+}
+
+
+function renderSocials(){
+
+  const socialConfig = [
+
+    ["facebook","fb","Facebook"],
+
+    ["tiktok","tiktok","TikTok"],
+
+    ["instagram","ig","Instagram"],
+
+    ["youtube","yt","YouTube"],
+
+    ["github","gh","GitHub"],
+
+    ["discord","dc","Discord"]
+
+  ];
+
+  function build(){
+
+    return socialConfig
+
+      .filter(item=>data.social[item[0]])
+
+      .map(item=>`
+
+        <a
+          class="social ${item[1]}"
+          href="${safeUrl(data.social[item[0]])}"
+          target="_blank"
+          rel="noopener"
+          aria-label="${item[2]}">
+
+          ${getSocialIcon(item[0])}
+
+        </a>
+
+      `).join("");
+
+  }
+
+  document.getElementById("heroSocials").innerHTML =
+    build();
+
+  document.getElementById("footerSocials").innerHTML =
+    build();
+
+}
+
+
+function renderMusic(){
+
+  document.getElementById("musicTitle").textContent =
+    data.music.title;
+
+  document.getElementById("musicArtist").textContent =
+    data.music.artist;
+
+  const album =
+    document.getElementById("albumImage");
+
+  album.src =
+    data.music.album ||
+    makeAlbum(data.music.title);
+
+  const videoId =
+    getYoutubeId(data.music.youtube);
+
+  const player =
+    document.getElementById("youtubePlayer");
+
+  if(videoId){
+
+    player.innerHTML = `
+
+      <iframe
+        src="https://www.youtube.com/embed/${videoId}"
+        title="${escapeHtml(data.music.title)}"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+
+    `;
+
+  }else{
+
+    player.innerHTML = `
+
+      <div style="
+        width:100%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        color:#aaa;
+        font-size:13px;
+      ">
+        Chưa có video YouTube
+      </div>
+
+    `;
+
+  }
+
+  document.getElementById("openYoutube").onclick = ()=>{
+
+    if(videoId){
+
+      window.open(
+        "https://www.youtube.com/watch?v="+videoId,
+        "_blank"
+      );
+
+    }
+
+  };
+
+}
+
+
+function makeAlbum(title){
+
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg"
+       width="500"
+       height="500">
+
+    <defs>
+
+      <linearGradient id="g"
+        x1="0" y1="0"
+        x2="1" y2="1">
+
+        <stop stop-color="#9b5cf6"/>
+        <stop offset=".5"
+          stop-color="#f78ae0"/>
+        <stop offset="1"
+          stop-color="#52d9e8"/>
+
+      </linearGradient>
+
+    </defs>
+
+    <rect width="500"
+      height="500"
+      fill="#10071f"/>
+
+    <circle cx="250"
+      cy="250"
+      r="170"
+      fill="url(#g)"
+      opacity=".35"/>
+
+    <circle cx="250"
+      cy="250"
+      r="110"
+      fill="none"
+      stroke="white"
+      stroke-opacity=".5"
+      stroke-width="2"/>
+
+    <text
+      x="250"
+      y="270"
+      text-anchor="middle"
+      fill="white"
+      font-size="42"
+      font-family="Arial"
+      font-weight="bold">
+      ${escapeHtml(title)}
+    </text>
+
+  </svg>`;
+
+  return "data:image/svg+xml;charset=UTF-8,"+
+    encodeURIComponent(svg);
+
+}
+
+
+/* =====================================================
+   UTILITIES
+===================================================== */
+
+function getYoutubeId(url){
+
+  if(!url) return null;
+
+  const regex =
+    /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
+
+  const match =
+    String(url).match(regex);
+
+  return match ? match[1] : null;
+
+}
+
+
+function safeUrl(url){
+
+  if(!url) return "#";
+
+  try{
+
+    const u =
+      new URL(url);
+
+    if(
+      u.protocol === "http:" ||
+      u.protocol === "https:"
+    ){
+
+      return u.href;
+
+    }
+
+  }catch(e){}
+
+  return "#";
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function getSocialIcon(type){
+
+  const icons = {
+
+    facebook:"f",
+
+    tiktok:"♪",
+
+    instagram:"◎",
+
+    youtube:"▶",
+
+    github:"◉",
+
+    discord:"◈"
+
+  };
+
+  return icons[type] || "•";
+
+}
+
+
+function applyTheme(){
+
+  document.documentElement.style.setProperty(
+    "--purple",
+    data.theme.purple
+  );
+
+  document.documentElement.style.setProperty(
+    "--pink",
+    data.theme.pink
+  );
+
+  document.documentElement.style.setProperty(
+    "--cyan",
+    data.theme.cyan
+  );
+
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+function setupReveal(){
+
+  const observer =
+    new IntersectionObserver(entries=>{
+
+      entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+          entry.target.classList.add("show");
+
+          entry.target
+            .querySelectorAll(".skill-fill")
+            .forEach(bar=>{
+
+              bar.style.width =
+                bar.dataset.percent+"%";
+
+            });
+
+          observer.unobserve(entry.target);
+
+        }
+
+      });
+
+    },{threshold:.15});
+
+  document
+    .querySelectorAll(".reveal")
+    .forEach(el=>observer.observe(el));
+
+}
+
+
+window.addEventListener("scroll",()=>{
+
+  document
+    .getElementById("nav")
+    .classList.toggle(
+      "scrolled",
+      window.scrollY>40
+    );
+
+},{passive:true});
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+const menuBtn =
+  document.getElementById("menuBtn");
+
+const mobileMenu =
+  document.getElementById("mobileMenu");
+
+menuBtn.onclick = ()=>{
+
+  mobileMenu.classList.toggle("open");
+
+};
+
+mobileMenu
+  .querySelectorAll("a")
+  .forEach(a=>{
+
+    a.onclick = ()=>{
+
+      mobileMenu.classList.remove("open");
+
+    };
+
+  });
+
+
+/* =====================================================
+   PETALS
+===================================================== */
+
+function createPetal(){
+
+  const p =
+    document.createElement("div");
+
+  p.className="petal";
+
+  const size =
+    5+Math.random()*9;
+
+  p.style.width=size+"px";
+  p.style.height=size+"px";
+
+  p.style.left =
+    Math.random()*100+"vw";
+
+  p.style.setProperty(
+    "--drift",
+    (Math.random()*160-80)+"px"
+  );
+
+  const duration =
+    8+Math.random()*10;
+
+  p.style.animationDuration =
+    duration+"s";
+
+  document
+    .getElementById("petals")
+    .appendChild(p);
+
+  setTimeout(
+    ()=>p.remove(),
+    duration*1000
+  );
+
+}
+
+for(let i=0;i<12;i++){
+
+  setTimeout(
+    createPetal,
+    i*400
+  );
+
+}
+
+setInterval(
+  createPetal,
+  1000
+);
+
+
+/* =====================================================
+   YEAR
+===================================================== */
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+
+/* =====================================================
+   START
+===================================================== */
+
+render();
+
+setTimeout(
+  setupReveal,
+  100
+);
+
 </script>
+
 </body>
 </html>
- 
