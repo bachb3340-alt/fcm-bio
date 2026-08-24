@@ -3,139 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Xuân Bách — Profile</title>
+<title>Xuân Bách — Developer · Designer · Dreamer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pink:#f472f0;
+    --bg0:#060210;
+    --bg1:#0f0819;
+    --bg2:#170c28;
     --purple:#9b5cf6;
-    --cyan:#4fd8ee;
+    --pink:#f78ae0;
+    --cyan:#52d9e8;
+    --moon:#f3e4ff;
+    --text:#f3ecff;
+    --muted:#a998c4;
+    --line:rgba(255,255,255,.09);
+    --glass:rgba(255,255,255,.04);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{height:100%;}
+  html{scroll-behavior:smooth;}
   body{
     font-family:'Be Vietnam Pro', sans-serif;
-    background:#050109;
-    color:#f1e9ff;
-    display:flex; align-items:center; justify-content:center;
-    min-height:100vh; padding:20px;
+    background:var(--bg0);
+    color:var(--text);
+    overflow-x:hidden;
+    min-height:100vh;
   }
+  ::selection{background:var(--purple); color:#fff;}
+  a{color:inherit; text-decoration:none;}
  
-  /* ============ PHONE FRAME ============ */
-  .frame{
-    position:relative;
-    width:396px; max-width:94vw; height:586px; max-height:92vh;
-    border-radius:28px;
-    overflow:hidden;
-    box-shadow:0 30px 80px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.06);
-    background:#0a0414;
-  }
-  .scroll{
-    position:absolute; inset:0; overflow-y:auto; overflow-x:hidden;
-  }
-  .scroll::-webkit-scrollbar{width:0;}
- 
-  /* ---- background scene ---- */
-  .bg{position:absolute; inset:0; z-index:0;}
+  /* ===================== FIXED ATMOSPHERE ===================== */
+  .atmosphere{position:fixed; inset:0; z-index:0; pointer-events:none;}
   .sky{
     position:absolute; inset:0;
     background:
-      radial-gradient(120% 60% at 50% -10%, #6a3fb0 0%, transparent 55%),
-      radial-gradient(90% 50% at 15% 15%, rgba(244,114,240,.35), transparent 60%),
-      radial-gradient(90% 50% at 85% 10%, rgba(79,216,238,.18), transparent 60%),
-      linear-gradient(180deg,#170a2e 0%, #170a2e 30%, #0f0620 65%, #08030f 100%);
+      radial-gradient(120% 55% at 50% -8%, #6a3fb0 0%, transparent 55%),
+      radial-gradient(70% 45% at 10% 8%, rgba(244,114,240,.28), transparent 60%),
+      radial-gradient(70% 45% at 92% 4%, rgba(79,216,238,.16), transparent 60%),
+      linear-gradient(180deg,#170a2e 0%, #170a2e 22%, #10071f 55%, #060210 100%);
   }
   .moon{
-    position:absolute; top:6%; left:50%; transform:translateX(-50%);
-    width:130px; height:130px; border-radius:50%;
-    background:radial-gradient(circle at 40% 35%, #ffe9ff, #e6c9ff 40%, #b98dff 75%);
-    box-shadow:0 0 70px 20px rgba(200,140,255,.45);
-    opacity:.55; filter:blur(1px);
+    position:absolute; top:8vh; left:50%; transform:translateX(-50%);
+    width:min(220px,22vw); height:min(220px,22vw); border-radius:50%;
+    background:radial-gradient(circle at 38% 34%, #fff6ff, #e6c9ff 42%, #b98dff 78%);
+    box-shadow:0 0 120px 30px rgba(200,140,255,.35);
+    opacity:.5; filter:blur(.5px);
+    transition:transform .1s linear;
   }
-  .skyline{position:absolute; left:0; right:0; bottom:0; height:62%;}
-  .bld{position:absolute; bottom:0; background:linear-gradient(180deg,#170c2c,#0a0416); border-top:1px solid rgba(180,140,255,.08);}
-  .win{position:absolute; width:3px; height:5px; background:rgba(255,210,255,.55); box-shadow:0 0 4px rgba(255,180,255,.6);}
-  .bloom{position:absolute; border-radius:50%; filter:blur(30px); opacity:.5; pointer-events:none;}
-  .branch{position:absolute; pointer-events:none;}
-  .blossom{position:absolute; border-radius:50% 10% 50% 50%; background:radial-gradient(circle at 30% 30%,#ffd6f8,#f2a6e8 60%,#c977d6); opacity:.85;}
+  .skyline{position:absolute; left:0; right:0; bottom:0; height:34vh; opacity:.9;}
+  .bld{position:absolute; bottom:0; background:linear-gradient(180deg,#170c2c,#0a0416); border-top:1px solid rgba(180,140,255,.07);}
+  .win{position:absolute; width:3px; height:5px; background:rgba(255,210,255,.5); box-shadow:0 0 4px rgba(255,180,255,.55);}
+  .bloomglow{position:absolute; border-radius:50%; filter:blur(60px); opacity:.35; pointer-events:none;}
  
-  /* ============ SIDEBAR RAIL ============ */
-  .rail{
-    position:absolute; top:0; left:0; bottom:0; width:44px;
-    background:rgba(10,4,20,.55);
-    border-right:1px solid rgba(255,255,255,.06);
-    display:flex; flex-direction:column; align-items:center;
-    padding:16px 0; gap:16px; z-index:5;
+  .petals{position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden;}
+  .petal{
+    position:absolute; top:-5%; border-radius:50% 8% 50% 50%;
+    background:radial-gradient(circle at 30% 30%,#ffe0fb,#f2a6e8 55%,#c977d6);
+    opacity:.75; animation:fall linear infinite;
   }
-  .rail .ic{
-    width:26px; height:26px; border-radius:8px;
-    display:flex; align-items:center; justify-content:center;
-    color:#8a7aa8; cursor:pointer; transition:.2s;
+  @keyframes fall{
+    0%{transform:translateY(-5vh) translateX(0) rotate(0deg);}
+    100%{transform:translateY(108vh) translateX(var(--drift,40px)) rotate(360deg);}
   }
-  .rail .ic svg{width:14px;height:14px;}
-  .rail .ic:hover{color:#fff;}
-  .rail .ic.active{color:#fff; background:linear-gradient(135deg,var(--purple),var(--pink)); box-shadow:0 0 12px rgba(155,92,246,.6);}
  
-  /* ============ CONTENT ============ */
-  .content{position:relative; z-index:3; padding:16px 16px 26px 56px;}
- 
-  .visits{
-    position:absolute; top:14px; right:14px; z-index:6;
-    display:flex; align-items:center; gap:6px;
+  /* ===================== NAV ===================== */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    transition:background .35s ease, padding .35s ease, border-color .35s ease;
+    border-bottom:1px solid transparent;
   }
-  .visits .coin{
-    width:24px; height:24px; border-radius:50%;
-    background:radial-gradient(circle at 35% 30%,#fff6d6,#f0c94a 45%,#b8860b 100%);
-    box-shadow:0 0 10px rgba(255,215,0,.5);
+  .nav.scrolled{
+    background:rgba(8,3,16,.72); backdrop-filter:blur(14px);
+    padding-top:14px; padding-bottom:14px;
+    border-bottom:1px solid var(--line);
   }
-  .visits .txt .num{font-size:11px; font-weight:700; color:#fff; line-height:1.1;}
-  .visits .txt .lbl{font-size:6.5px; letter-spacing:.05em; color:#8a7aa8; text-transform:uppercase;}
+  .logo{
+    font-family:'Great Vibes', cursive; font-size:26px;
+    background:linear-gradient(90deg,#f5d0fe,#e9d5ff,#c4b5fd);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .nav-links{display:flex; align-items:center; gap:34px;}
+  .nav-links a{
+    font-size:12.5px; font-weight:600; letter-spacing:.05em; color:var(--muted);
+    position:relative; padding-bottom:4px; transition:color .25s;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:linear-gradient(90deg,var(--pink),var(--cyan)); transition:width .3s;
+  }
+  .nav-links a:hover{color:#fff;}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    padding:9px 20px; border-radius:999px; font-size:12px; font-weight:700;
+    background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff;
+    box-shadow:0 0 22px rgba(155,92,246,.4); letter-spacing:.03em;
+  }
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:60;}
+  .burger span{width:22px; height:2px; background:#fff; border-radius:2px; transition:.3s;}
+  .mobile-menu{
+    position:fixed; inset:0; background:rgba(8,3,18,.97); backdrop-filter:blur(20px);
+    z-index:55; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:28px; transform:translateY(-100%); transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{font-size:20px; font-weight:600; color:var(--text);}
  
-  .avatar-wrap{display:flex; justify-content:center; padding-top:8px; position:relative;}
+  /* ===================== LAYOUT HELPERS ===================== */
+  .wrap{position:relative; z-index:2;}
+  .container{max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,64px);}
+  .eyebrow{
+    font-size:11px; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--pink); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:linear-gradient(90deg,var(--pink),transparent);}
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+ 
+  /* ===================== HERO ===================== */
+  .hero{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:140px 20px 80px;
+  }
+  .hero-inner{max-width:640px;}
+  .hero .eyebrow{justify-content:center;}
+  .hero .eyebrow::before{display:none;}
+  .avatar-wrap{display:flex; justify-content:center; margin:22px 0 6px; position:relative;}
   .avatar{
-    width:112px; height:112px; border-radius:38% 38% 42% 42% / 45% 45% 40% 40%;
+    width:132px; height:132px; border-radius:38% 38% 42% 42% / 45% 45% 40% 40%;
     padding:3px;
     background:conic-gradient(from 0deg, var(--purple), var(--pink), var(--cyan), var(--purple));
-    box-shadow:0 0 30px rgba(155,92,246,.55);
+    box-shadow:0 0 46px rgba(155,92,246,.5);
   }
   .avatar-inner{
     width:100%; height:100%; border-radius:36% 36% 40% 40% / 43% 43% 38% 38%;
-    background:
-      radial-gradient(circle at 50% 30%, rgba(244,114,240,.25), transparent 60%),
-      linear-gradient(180deg,#241238,#100822);
-    border:2px solid #0e0620;
-    overflow:hidden; position:relative;
+    background:radial-gradient(circle at 50% 30%, rgba(244,114,240,.25), transparent 60%), linear-gradient(180deg,#241238,#100822);
+    border:2px solid #0e0620; overflow:hidden; position:relative;
   }
   .portrait{position:absolute; inset:0;}
   .status-dot{
-    position:absolute; width:16px; height:16px; border-radius:50%;
-    background:#34d399; border:3px solid #0f0620; right:calc(50% - 52px); bottom:4px;
+    position:absolute; width:17px; height:17px; border-radius:50%;
+    background:#34d399; border:3px solid var(--bg0); right:calc(50% - 60px); bottom:6px;
     box-shadow:0 0 10px #34d399;
   }
- 
   .name{
-    text-align:center; margin-top:10px;
-    font-family:'Great Vibes', cursive; font-size:38px; line-height:1;
+    font-family:'Great Vibes', cursive; font-size:clamp(48px,9vw,78px); line-height:1;
+    margin-top:6px;
     background:linear-gradient(90deg,#f5d0fe,#e9d5ff 40%,#c4b5fd);
     -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow:0 0 20px rgba(196,181,253,.4);
+    text-shadow:0 0 30px rgba(196,181,253,.35);
   }
-  .role{text-align:center; margin-top:3px; font-size:9.5px; letter-spacing:.16em; font-weight:600; color:#b6a6d6;}
- 
-  .status-pill{display:flex; justify-content:center; margin-top:12px;}
+  .role{margin-top:8px; font-size:12.5px; letter-spacing:.22em; font-weight:700; color:var(--muted);}
+  .status-pill{display:flex; justify-content:center; margin-top:20px;}
   .status-pill span{
-    display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:999px;
-    background:rgba(139,92,246,.18); border:1px solid rgba(168,120,255,.4);
-    font-size:10px; font-weight:600; color:#e9d8ff;
+    display:inline-flex; align-items:center; gap:7px; padding:7px 16px; border-radius:999px;
+    background:rgba(139,92,246,.16); border:1px solid rgba(168,120,255,.35);
+    font-size:11px; font-weight:600; color:#e9d8ff;
   }
-  .status-pill .dt{width:6px;height:6px;border-radius:50%;background:#4fd8ee;box-shadow:0 0 8px #4fd8ee;}
- 
-  .quote{margin-top:12px; text-align:center; padding:2px 18px; font-size:11px; line-height:1.65; color:#c3b6e0; font-style:italic;}
-  .quote .mk{font-size:20px; color:var(--pink); font-family:Georgia,serif; opacity:.8;}
- 
-  .socials{display:flex; justify-content:center; gap:9px; margin-top:14px;}
-  .soc{width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center; color:#fff; cursor:pointer; transition:.2s;}
+  .status-pill .dt{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
+  .quote{margin-top:20px; font-size:14px; line-height:1.8; color:#c3b6e0; font-style:italic;}
+  .hero-ctas{display:flex; gap:14px; justify-content:center; margin-top:30px; flex-wrap:wrap;}
+  .btn{
+    padding:13px 26px; border-radius:999px; font-size:13px; font-weight:700; letter-spacing:.02em;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn.primary{background:linear-gradient(135deg,var(--purple),var(--pink)); color:#fff; box-shadow:0 0 26px rgba(155,92,246,.4);}
+  .btn.ghost{border:1px solid var(--line); color:var(--text); background:var(--glass); backdrop-filter:blur(6px);}
+  .btn:hover{transform:translateY(-2px);}
+  .socials{display:flex; justify-content:center; gap:10px; margin-top:34px;}
+  .soc{width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; transition:.2s;}
   .soc svg{width:16px;height:16px;}
   .soc:hover{transform:translateY(-3px);}
   .soc.fb{background:linear-gradient(135deg,#1877f2,#0d5cd6);}
@@ -145,104 +182,156 @@
   .soc.gh{background:#24292e;}
   .soc.dc{background:#5865f2;}
  
+  .scroll-cue{
+    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    font-size:9.5px; letter-spacing:.18em; color:var(--muted); text-transform:uppercase;
+  }
+  .scroll-cue .line{width:1px; height:34px; background:linear-gradient(180deg,var(--pink),transparent); animation:cue 1.8s ease-in-out infinite;}
+  @keyframes cue{0%{opacity:.2; transform:scaleY(.4); transform-origin:top;} 50%{opacity:1; transform:scaleY(1); transform-origin:top;} 100%{opacity:.2; transform:scaleY(.4); transform-origin:top;}}
+ 
+  /* ===================== STATS STRIP ===================== */
+  .stats-strip{padding:0 20px;}
   .stats{
-    margin-top:14px; display:grid; grid-template-columns:repeat(4,1fr);
-    background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.08);
-    border-radius:14px; padding:12px 2px; backdrop-filter:blur(8px);
+    max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr);
+    background:rgba(255,255,255,.035); border:1px solid var(--line); border-radius:20px;
+    padding:26px 10px; backdrop-filter:blur(14px);
   }
-  .stats .item{text-align:center; border-right:1px solid rgba(255,255,255,.08);}
+  .stats .item{text-align:center; border-right:1px solid var(--line);}
   .stats .item:last-child{border-right:none;}
-  .stats .num{font-size:14px; font-weight:800; color:#fff;}
-  .stats .lbl{font-size:7px; color:#8a7aa8; letter-spacing:.04em; margin-top:2px; text-transform:uppercase;}
+  .stats .num{font-size:clamp(20px,3vw,28px); font-weight:800; color:#fff;}
+  .stats .lbl{font-size:9.5px; color:var(--muted); letter-spacing:.06em; margin-top:4px; text-transform:uppercase;}
  
-  /* 3-column info grid */
-  .grid3{margin-top:12px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;}
-  .box{
-    background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.08);
-    border-radius:12px; padding:10px 9px; backdrop-filter:blur(8px);
+  /* ===================== SECTION SHELL ===================== */
+  section{padding:110px 0;}
+  .section-head{max-width:560px; margin-bottom:50px;}
+  .section-title{font-size:clamp(28px,4vw,42px); font-weight:800; margin-top:12px; letter-spacing:-.01em;}
+  .section-title em{
+    font-family:'Great Vibes', cursive; font-style:normal; font-size:1.25em;
+    background:linear-gradient(90deg,var(--pink),var(--cyan));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .box h3{font-size:9.5px; font-weight:700; display:flex; align-items:center; gap:5px; color:#fff; margin-bottom:8px;}
-  .box h3 svg{width:11px;height:11px; color:var(--pink);}
-  .about-text{font-size:8.6px; line-height:1.55; color:#b6a6d6;}
-  .see-more{margin-top:7px; font-size:8px; font-weight:700; letter-spacing:.05em; color:var(--pink);}
  
-  .skill{margin-bottom:7px;}
+  /* ===================== ABOUT + SKILLS ===================== */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;}
+  .about-text p{font-size:15px; line-height:1.85; color:var(--muted); margin-bottom:16px;}
+  .about-text strong{color:#fff;}
+  .about-cards{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:26px;}
+  .info-card{background:var(--glass); border:1px solid var(--line); border-radius:14px; padding:14px 16px; backdrop-filter:blur(10px);}
+  .info-card .k{font-size:9px; letter-spacing:.12em; color:var(--muted); text-transform:uppercase;}
+  .info-card .v{font-size:13.5px; font-weight:700; margin-top:4px; color:#fff;}
+ 
+  .skills-panel{background:var(--glass); border:1px solid var(--line); border-radius:22px; padding:32px; backdrop-filter:blur(14px);}
+  .skill{margin-bottom:20px;}
   .skill:last-child{margin-bottom:0;}
-  .skill-top{display:flex; justify-content:space-between; font-size:7.8px; margin-bottom:3px; color:#b6a6d6;}
-  .skill-top b{color:#fff; font-weight:600;}
-  .bar{height:4px; border-radius:99px; background:rgba(255,255,255,.08); overflow:hidden;}
-  .bar i{display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,var(--purple),var(--pink)); width:0%; transition:width 1.4s cubic-bezier(.2,.8,.2,1);}
+  .skill-top{display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:8px; color:var(--muted);}
+  .skill-top b{color:#fff; font-weight:700;}
+  .bar{height:6px; border-radius:99px; background:rgba(255,255,255,.07); overflow:hidden;}
+  .bar i{display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,var(--purple),var(--pink),var(--cyan)); width:0%; transition:width 1.6s cubic-bezier(.2,.8,.2,1);}
  
-  .hobbies{display:flex; flex-direction:column; gap:7px;}
-  .hobby{display:flex; align-items:flex-start; gap:6px; font-size:7.8px; color:#b6a6d6; line-height:1.3;}
-  .hobby .ic{width:16px;height:16px;border-radius:5px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:rgba(139,92,246,.2);color:var(--pink); margin-top:1px;}
-  .hobby .ic svg{width:8px;height:8px;}
-  .hobby b{color:#fff; font-weight:600; display:block; font-size:8.4px;}
- 
-  .player{
-    margin-top:12px; background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09);
-    border-radius:16px; padding:12px 14px; backdrop-filter:blur(8px);
+  /* ===================== HOBBIES ===================== */
+  .hobby-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+  .hobby-card{
+    background:var(--glass); border:1px solid var(--line); border-radius:18px; padding:26px 20px;
+    transition:transform .3s ease, border-color .3s ease, background .3s ease;
   }
-  .player-top{display:flex; align-items:center; gap:9px;}
-  .album{width:38px;height:38px;border-radius:50%; background:conic-gradient(#3a2a5c,#150a28 60%,#3a2a5c); border:2px solid rgba(255,255,255,.15); flex:0 0 auto; animation:spin 5s linear infinite;}
+  .hobby-card:hover{transform:translateY(-6px); border-color:rgba(244,114,240,.35); background:rgba(255,255,255,.06);}
+  .hobby-card .ic{
+    width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,rgba(155,92,246,.25),rgba(244,114,240,.2)); color:var(--pink); margin-bottom:16px;
+  }
+  .hobby-card .ic svg{width:20px;height:20px;}
+  .hobby-card h4{font-size:15px; font-weight:700; margin-bottom:6px;}
+  .hobby-card p{font-size:12.5px; color:var(--muted); line-height:1.6;}
+ 
+  /* ===================== MUSIC ===================== */
+  .music-panel{
+    background:linear-gradient(135deg,rgba(155,92,246,.1),rgba(79,216,238,.06));
+    border:1px solid var(--line); border-radius:24px; padding:34px clamp(20px,4vw,48px);
+    display:flex; align-items:center; gap:26px; flex-wrap:wrap; backdrop-filter:blur(16px);
+  }
+  .album{width:64px;height:64px;border-radius:50%; background:conic-gradient(#3a2a5c,#150a28 60%,#3a2a5c); border:2px solid rgba(255,255,255,.15); flex:0 0 auto; animation:spin 5s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
-  .track{flex:1; min-width:0;}
-  .track .t{font-size:11px; font-weight:700; color:#fff;}
-  .track .a{font-size:8.5px; color:#8a7aa8;}
-  .controls{display:flex; align-items:center; gap:10px;}
-  .controls .btn{color:#b6a6d6; cursor:pointer; display:flex;}
-  .controls svg{width:13px;height:13px;}
-  .controls .play{width:30px;height:30px;border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--pink)); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 0 14px rgba(155,92,246,.6);}
-  .controls .play svg{width:12px;height:12px;}
- 
-  .progress{margin-top:9px;}
-  .progress .bar2{height:3px; border-radius:99px; background:rgba(255,255,255,.1); position:relative;}
-  .progress .bar2 i{position:absolute; left:0; top:0; height:100%; width:32%; border-radius:99px; background:linear-gradient(90deg,var(--cyan),var(--pink));}
-  .progress .times{display:flex; justify-content:space-between; font-size:7.5px; color:#8a7aa8; margin-top:4px;}
- 
-  .wave{display:flex; align-items:flex-end; gap:1.6px; height:20px; margin-top:9px; justify-content:center;}
-  .wave i{width:2px; border-radius:2px; background:linear-gradient(180deg,var(--cyan),var(--pink)); animation:wv 1.1s ease-in-out infinite;}
+  .track{flex:1; min-width:160px;}
+  .track .eyebrow{margin-bottom:6px;}
+  .track .t{font-size:19px; font-weight:800; color:#fff;}
+  .track .a{font-size:12.5px; color:var(--muted); margin-top:2px;}
+  .track .progress{margin-top:14px; max-width:320px;}
+  .track .bar2{height:4px; border-radius:99px; background:rgba(255,255,255,.1); position:relative;}
+  .track .bar2 i{position:absolute; left:0; top:0; height:100%; width:32%; border-radius:99px; background:linear-gradient(90deg,var(--cyan),var(--pink));}
+  .track .times{display:flex; justify-content:space-between; font-size:10.5px; color:var(--muted); margin-top:6px;}
+  .controls{display:flex; align-items:center; gap:16px;}
+  .controls .cbtn{color:var(--muted); cursor:pointer; display:flex;}
+  .controls svg{width:16px;height:16px;}
+  .controls .play{width:46px;height:46px;border-radius:50%; background:linear-gradient(135deg,var(--purple),var(--pink)); display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 0 20px rgba(155,92,246,.55); cursor:pointer;}
+  .controls .play svg{width:16px;height:16px;}
+  .wave{display:flex; align-items:flex-end; gap:2px; height:30px; flex:0 0 auto;}
+  .wave i{width:2.4px; border-radius:2px; background:linear-gradient(180deg,var(--cyan),var(--pink)); animation:wv 1.1s ease-in-out infinite;}
   @keyframes wv{0%,100%{transform:scaleY(.3);} 50%{transform:scaleY(1);}}
  
-  .scrolldown{
-    position:absolute; bottom:8px; right:8px; z-index:6;
-    width:22px;height:22px;border-radius:50%;
-    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
-    display:flex; align-items:center; justify-content:center; color:#b6a6d6;
+  /* ===================== FOOTER ===================== */
+  footer{padding:80px 0 40px; text-align:center; border-top:1px solid var(--line); margin-top:40px;}
+  footer .name{font-size:clamp(34px,6vw,52px); margin-bottom:6px;}
+  footer p{color:var(--muted); font-size:13px; max-width:420px; margin:0 auto 24px;}
+  footer .copy{margin-top:40px; font-size:11px; color:#6f6088; letter-spacing:.03em;}
+ 
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .burger{display:flex;}
+    .about-grid{grid-template-columns:1fr; gap:36px;}
+    .hobby-grid{grid-template-columns:1fr 1fr;}
+    .stats{grid-template-columns:repeat(2,1fr); row-gap:18px;}
+    .stats .item:nth-child(2){border-right:none;}
   }
-  .scrolldown svg{width:10px;height:10px;}
+  @media (max-width:520px){
+    .hobby-grid{grid-template-columns:1fr;}
+    section{padding:80px 0;}
+    .music-panel{flex-direction:column; align-items:stretch; text-align:center;}
+    .controls{justify-content:center;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+  :focus-visible{outline:2px solid var(--cyan); outline-offset:3px; border-radius:4px;}
 </style>
 </head>
 <body>
  
-<div class="frame">
-  <div class="scroll">
-    <div class="bg">
-      <div class="sky"></div>
-      <div class="moon"></div>
-      <div class="skyline" id="skyline"></div>
-      <div class="bloom" style="width:180px;height:180px;left:-40px;top:60px;background:#c77bff;"></div>
-      <div class="bloom" style="width:160px;height:160px;right:-40px;top:40px;background:#ff9be8;"></div>
-      <svg class="branch" style="top:-6px;left:-10px;width:110px;" viewBox="0 0 110 90"><path d="M0 0 C 20 15, 30 25, 55 30 C 70 33, 80 40, 95 55" stroke="#3a2450" stroke-width="3" fill="none"/></svg>
-      <svg class="branch" style="top:-6px;right:-10px;width:110px;" viewBox="0 0 110 90"><path d="M110 0 C 90 15, 80 25, 55 30 C 40 33, 30 40, 15 55" stroke="#3a2450" stroke-width="3" fill="none"/></svg>
-      <div id="blossoms"></div>
-    </div>
+<div class="atmosphere">
+  <div class="sky"></div>
+  <div class="moon" id="moon"></div>
+  <div class="skyline" id="skyline"></div>
+  <div class="bloomglow" style="width:340px;height:340px;left:-80px;top:20px;background:#c77bff;"></div>
+  <div class="bloomglow" style="width:300px;height:300px;right:-80px;top:0;background:#ff9be8;"></div>
+</div>
+<div class="petals" id="petals"></div>
  
-    <div class="rail">
-      <div class="ic active" data-i="home"></div>
-      <div class="ic" data-i="user"></div>
-      <div class="ic" data-i="code"></div>
-      <div class="ic" data-i="gamepad"></div>
-      <div class="ic" data-i="star"></div>
-      <div class="ic" data-i="mail"></div>
-    </div>
+<nav class="nav" id="nav">
+  <a href="#top" class="logo">Xuân Bách</a>
+  <div class="nav-links">
+    <a href="#about">Về mình</a>
+    <a href="#skills">Kỹ năng</a>
+    <a href="#hobbies">Sở thích</a>
+    <a href="#music">Đang nghe</a>
+    <a href="#contact" class="nav-cta">Liên hệ</a>
+  </div>
+  <div class="burger" id="burger"><span></span><span></span><span></span></div>
+</nav>
  
-    <div class="visits">
-      <div class="coin"></div>
-      <div class="txt"><div class="num" id="visitNum">12.458</div><div class="lbl">Lượt truy cập</div></div>
-    </div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">Về mình</a>
+  <a href="#skills">Kỹ năng</a>
+  <a href="#hobbies">Sở thích</a>
+  <a href="#music">Đang nghe</a>
+  <a href="#contact">Liên hệ</a>
+</div>
  
-    <div class="content">
+<div class="wrap" id="top">
+ 
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Xin chào, mình là</div>
       <div class="avatar-wrap">
         <div class="avatar">
           <div class="avatar-inner">
@@ -265,20 +354,14 @@
         </div>
         <div class="status-dot"></div>
       </div>
- 
-      <div class="name">Xuân Bách</div>
+      <h1 class="name">Xuân Bách</h1>
       <div class="role">DEVELOPER · DESIGNER · DREAMER</div>
- 
       <div class="status-pill"><span><i class="dt"></i>Đang học hỏi mỗi ngày ⚡</span></div>
- 
-      <div class="quote">
-        <span class="mk">“</span>
-        Không ngừng cố gắng<br>
-        Không ngừng tiến về phía trước<br>
-        Mọi thứ rồi sẽ đến.
-        <span class="mk">”</span>
+      <p class="quote">"Không ngừng cố gắng, không ngừng tiến về phía trước — mọi thứ rồi sẽ đến."</p>
+      <div class="hero-ctas">
+        <a href="#skills" class="btn primary">Xem kỹ năng</a>
+        <a href="#contact" class="btn ghost">Liên hệ với mình</a>
       </div>
- 
       <div class="socials">
         <div class="soc fb" data-i="fb"></div>
         <div class="soc tiktok" data-i="tiktok"></div>
@@ -287,75 +370,133 @@
         <div class="soc gh" data-i="gh"></div>
         <div class="soc dc" data-i="dc"></div>
       </div>
+    </div>
+    <div class="scroll-cue"><span>Cuộn xuống</span><span class="line"></span></div>
+  </section>
  
-      <div class="stats">
-        <div class="item"><div class="num">20+</div><div class="lbl">Dự án</div></div>
-        <div class="item"><div class="num">1.2K+</div><div class="lbl">Followers</div></div>
-        <div class="item"><div class="num">5+</div><div class="lbl">Năm KN</div></div>
-        <div class="item"><div class="num">∞</div><div class="lbl">Đam mê</div></div>
-      </div>
+  <div class="stats-strip reveal">
+    <div class="stats">
+      <div class="item"><div class="num">20+</div><div class="lbl">Dự án</div></div>
+      <div class="item"><div class="num">1.2K+</div><div class="lbl">Followers</div></div>
+      <div class="item"><div class="num">5+</div><div class="lbl">Năm kinh nghiệm</div></div>
+      <div class="item"><div class="num">∞</div><div class="lbl">Đam mê</div></div>
+    </div>
+  </div>
  
-      <div class="grid3">
-        <div class="box">
-          <h3><span data-i="user2"></span>Về mình</h3>
-          <div class="about-text">Mình là lập trình viên đam mê Frontend, thích thiết kế đẹp và tối ưu trải nghiệm người dùng. Ngoài ra mình còn thích chụp ảnh phong cảnh.</div>
-          <div class="see-more">XEM THÊM →</div>
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="eyebrow">Giới thiệu</div>
+          <h2 class="section-title">Về <em>mình</em></h2>
+          <div class="about-text" style="margin-top:22px;">
+            <p>Mình là lập trình viên đam mê <strong>Frontend</strong>, thích thiết kế đẹp và tối ưu trải nghiệm người dùng. Với mình, một sản phẩm tốt là nơi công nghệ và thẩm mỹ gặp nhau.</p>
+            <p>Ngoài giờ code, mình còn thích chụp ảnh phong cảnh, nghe nhạc lo-fi lúc đêm khuya và luôn tò mò về những công nghệ mới.</p>
+          </div>
+          <div class="about-cards">
+            <div class="info-card"><div class="k">Vị trí</div><div class="v">Việt Nam</div></div>
+            <div class="info-card"><div class="k">Trạng thái</div><div class="v">Sẵn sàng nhận việc</div></div>
+            <div class="info-card"><div class="k">Hướng đi</div><div class="v">Frontend & UI/UX</div></div>
+            <div class="info-card"><div class="k">Ngôn ngữ</div><div class="v">Tiếng Việt, English</div></div>
+          </div>
         </div>
-        <div class="box">
-          <h3><span data-i="chip"></span>Kỹ năng</h3>
-          <div class="skill"><div class="skill-top"><span>HTML/CSS</span><b>90%</b></div><div class="bar"><i data-w="90"></i></div></div>
-          <div class="skill"><div class="skill-top"><span>JavaScript</span><b>80%</b></div><div class="bar"><i data-w="80"></i></div></div>
-          <div class="skill"><div class="skill-top"><span>ReactJS</span><b>75%</b></div><div class="bar"><i data-w="75"></i></div></div>
-          <div class="skill"><div class="skill-top"><span>UI/UX Design</span><b>70%</b></div><div class="bar"><i data-w="70"></i></div></div>
-          <div class="skill"><div class="skill-top"><span>C++/Python</span><b>60%</b></div><div class="bar"><i data-w="60"></i></div></div>
-        </div>
-        <div class="box">
-          <h3><span data-i="star2"></span>Sở thích</h3>
-          <div class="hobbies">
-            <div class="hobby"><span class="ic" data-i="game"></span><div><b>Chơi Game</b>FPS, MOBA, RPG</div></div>
-            <div class="hobby"><span class="ic" data-i="music"></span><div><b>Nghe Nhạc</b>Lo-fi, Chill, EDM</div></div>
-            <div class="hobby"><span class="ic" data-i="tech"></span><div><b>Công Nghệ</b>AI, Web, App</div></div>
-            <div class="hobby"><span class="ic" data-i="cam"></span><div><b>Chụp Ảnh</b>Photography & Edit</div></div>
+ 
+        <div class="reveal" id="skills">
+          <div class="eyebrow">Chuyên môn</div>
+          <h2 class="section-title">Kỹ <em>năng</em></h2>
+          <div class="skills-panel" style="margin-top:22px;">
+            <div class="skill"><div class="skill-top"><span>HTML / CSS</span><b>90%</b></div><div class="bar"><i data-w="90"></i></div></div>
+            <div class="skill"><div class="skill-top"><span>JavaScript</span><b>80%</b></div><div class="bar"><i data-w="80"></i></div></div>
+            <div class="skill"><div class="skill-top"><span>ReactJS</span><b>75%</b></div><div class="bar"><i data-w="75"></i></div></div>
+            <div class="skill"><div class="skill-top"><span>UI/UX Design</span><b>70%</b></div><div class="bar"><i data-w="70"></i></div></div>
+            <div class="skill"><div class="skill-top"><span>C++ / Python</span><b>60%</b></div><div class="bar"><i data-w="60"></i></div></div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
  
-      <div class="player">
-        <div class="player-top">
-          <div class="album"></div>
-          <div class="track"><div class="t">Not Alone</div><div class="a">Bảo Vy</div></div>
-          <div class="controls">
-            <div class="btn" data-i="prev"></div>
-            <div class="play" data-i="play"></div>
-            <div class="btn" data-i="next"></div>
+  <section id="hobbies">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Ngoài công việc</div>
+        <h2 class="section-title">Sở <em>thích</em></h2>
+      </div>
+      <div class="hobby-grid reveal">
+        <div class="hobby-card">
+          <div class="ic" data-i="game"></div>
+          <h4>Chơi Game</h4>
+          <p>FPS, MOBA, RPG — thư giãn sau những giờ code căng thẳng.</p>
+        </div>
+        <div class="hobby-card">
+          <div class="ic" data-i="music"></div>
+          <h4>Nghe Nhạc</h4>
+          <p>Lo-fi, Chill, EDM — nguồn cảm hứng khi làm việc về đêm.</p>
+        </div>
+        <div class="hobby-card">
+          <div class="ic" data-i="tech"></div>
+          <h4>Công Nghệ</h4>
+          <p>Luôn cập nhật AI, Web, App — tò mò với mọi điều mới.</p>
+        </div>
+        <div class="hobby-card">
+          <div class="ic" data-i="cam"></div>
+          <h4>Chụp Ảnh</h4>
+          <p>Photography & Edit — ghi lại những khoảnh khắc đẹp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="music">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Bây giờ</div>
+        <h2 class="section-title">Đang <em>nghe</em></h2>
+      </div>
+      <div class="music-panel reveal">
+        <div class="album"></div>
+        <div class="track">
+          <div class="eyebrow">Now playing</div>
+          <div class="t">Not Alone</div>
+          <div class="a">Bảo Vy</div>
+          <div class="progress">
+            <div class="bar2"><i></i></div>
+            <div class="times"><span>1:24</span><span>4:28</span></div>
           </div>
         </div>
-        <div class="progress">
-          <div class="bar2"><i></i></div>
-          <div class="times"><span>1:24</span><span>4:28</span></div>
+        <div class="controls">
+          <div class="cbtn" data-i="prev"></div>
+          <div class="play" data-i="play"></div>
+          <div class="cbtn" data-i="next"></div>
         </div>
         <div class="wave" id="wave"></div>
       </div>
     </div>
-  </div>
-  <div class="scrolldown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+  </section>
+ 
+  <footer id="contact">
+    <div class="container">
+      <div class="reveal">
+        <div class="eyebrow" style="justify-content:center;">Kết nối</div>
+        <div class="name">Hãy nói chuyện nhé</div>
+        <p>Luôn sẵn sàng cho những dự án mới, ý tưởng thú vị hoặc đơn giản là một lời chào.</p>
+        <div class="socials">
+          <div class="soc fb" data-i="fb"></div>
+          <div class="soc tiktok" data-i="tiktok"></div>
+          <div class="soc ig" data-i="ig"></div>
+          <div class="soc yt" data-i="yt"></div>
+          <div class="soc gh" data-i="gh"></div>
+          <div class="soc dc" data-i="dc"></div>
+        </div>
+        <div class="copy">© 2026 Xuân Bách. Made with 💜 at night.</div>
+      </div>
+    </div>
+  </footer>
+ 
 </div>
  
 <script>
 const ICONS = {
-  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>',
-  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
-  code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-  gamepad:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>',
-  star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.8 5.5 21 7.5 13.5 2 9 9 9 12 2"/></svg>',
-  mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>',
-  user2:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>',
-  chip:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-  star2:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 16.8 5.5 21 7.5 13.5 2 9 9 9 12 2"/></svg>',
-  game:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>',
-  music:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
-  tech:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>',
-  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
   fb:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12z"/></svg>',
   tiktok:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.2c-.9-.9-1.4-2.1-1.4-3.4h-3.1v14.3c0 1.5-1.2 2.7-2.7 2.7s-2.7-1.2-2.7-2.7 1.2-2.7 2.7-2.7c.3 0 .6.1.9.1v-3.2c-.3 0-.6-.1-.9-.1-3.2 0-5.8 2.6-5.8 5.9s2.6 5.9 5.8 5.9 5.8-2.6 5.8-5.9V9.1c1.2.9 2.7 1.4 4.3 1.4V7.4c-1 0-1.9-.4-2.7-1.1z"/></svg>',
   ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
@@ -365,7 +506,11 @@ const ICONS = {
   prev:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 5l-11 7 11 7V5zM6 5H4v14h2z"/></svg>',
   next:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 5l11 7-11 7V5zM18 5h2v14h-2z"/></svg>',
   play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z"/></svg>',
-  pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>'
+  pause:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/></svg>',
+  game:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>',
+  music:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
+  tech:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>',
+  cam:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>'
 };
 document.querySelectorAll('[data-i]').forEach(el=>{
   const key = el.getAttribute('data-i');
@@ -373,6 +518,7 @@ document.querySelectorAll('[data-i]').forEach(el=>{
 });
 document.querySelector('.play').innerHTML = ICONS.play;
  
+/* play/pause */
 let playing = true;
 document.querySelector('.play').addEventListener('click', function(){
   playing = !playing;
@@ -381,77 +527,101 @@ document.querySelector('.play').addEventListener('click', function(){
   document.querySelector('.album').style.animationPlayState = playing ? 'running' : 'paused';
 });
  
-document.querySelectorAll('.rail .ic').forEach(ic=>{
-  ic.addEventListener('click', ()=>{
-    document.querySelectorAll('.rail .ic').forEach(i=>i.classList.remove('active'));
-    ic.classList.add('active');
-  });
-});
+/* nav scroll state + mobile menu */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', ()=>{
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  const moon = document.getElementById('moon');
+  moon.style.transform = `translateX(-50%) translateY(${window.scrollY*0.08}px)`;
+}, {passive:true});
  
-window.addEventListener('load', ()=>{
-  document.querySelectorAll('.bar i').forEach(b=>{
-    const w = b.getAttribute('data-w');
-    setTimeout(()=> b.style.width = w + '%', 200);
-  });
-});
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', ()=> mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> mobileMenu.classList.remove('open')));
  
+/* skill bars fill on view */
+const skillObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.bar i').forEach(b=>{
+        const w = b.getAttribute('data-w');
+        b.style.width = w + '%';
+      });
+      skillObserver.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.skills-panel').forEach(p=> skillObserver.observe(p));
+ 
+/* scroll reveal */
+const revealObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); revealObserver.unobserve(e.target); }
+  });
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=> revealObserver.observe(el));
+ 
+/* wave bars */
 const wave = document.getElementById('wave');
-for(let i=0;i<40;i++){
+for(let i=0;i<32;i++){
   const bar = document.createElement('i');
-  bar.style.height = (5 + Math.random()*15) + 'px';
+  bar.style.height = (6 + Math.random()*18) + 'px';
   bar.style.animationDelay = (Math.random()*1.2) + 's';
   bar.style.animationDuration = (0.8 + Math.random()*0.8) + 's';
   wave.appendChild(bar);
 }
  
-// procedurally build city skyline
-const skyline = document.getElementById('skyline');
-const bCount = 14;
-for(let i=0;i<bCount;i++){
-  const b = document.createElement('div');
-  b.className='bld';
-  const w = 18 + Math.random()*26;
-  const h = 40 + Math.random()*140;
-  b.style.width = w+'px';
-  b.style.height = h+'px';
-  b.style.left = (i*(396/bCount) + Math.random()*8) + 'px';
-  skyline.appendChild(b);
-  const winCount = Math.floor(h/10);
-  for(let j=0;j<winCount;j++){
-    const wpx = Math.random()*(w-8)+3;
-    const hpx = Math.random()*(h-8)+3;
-    if(Math.random() > 0.55){
-      const win = document.createElement('div');
-      win.className='win';
-      win.style.left = wpx+'px';
-      win.style.bottom = hpx+'px';
-      win.style.background = Math.random() > 0.5 ? 'rgba(255,210,255,.65)' : 'rgba(150,220,255,.55)';
-      b.appendChild(win);
+/* procedural full-width city skyline */
+function buildSkyline(){
+  const skyline = document.getElementById('skyline');
+  skyline.innerHTML = '';
+  const width = window.innerWidth;
+  const bCount = Math.max(18, Math.round(width/60));
+  for(let i=0;i<bCount;i++){
+    const b = document.createElement('div');
+    b.className='bld';
+    const w = 22 + Math.random()*34;
+    const h = 60 + Math.random()*180;
+    b.style.width = w+'px';
+    b.style.height = h+'px';
+    b.style.left = (i*(width/bCount) + Math.random()*10) + 'px';
+    skyline.appendChild(b);
+    const winCount = Math.floor(h/12);
+    for(let j=0;j<winCount;j++){
+      if(Math.random() > 0.55){
+        const win = document.createElement('div');
+        win.className='win';
+        win.style.left = (Math.random()*(w-8)+3)+'px';
+        win.style.bottom = (Math.random()*(h-8)+3)+'px';
+        win.style.background = Math.random() > 0.5 ? 'rgba(255,210,255,.6)' : 'rgba(150,220,255,.5)';
+        b.appendChild(win);
+      }
     }
   }
 }
+buildSkyline();
+let resizeT;
+window.addEventListener('resize', ()=>{ clearTimeout(resizeT); resizeT = setTimeout(buildSkyline, 250); });
  
-// blossoms scattered
-const bloss = document.getElementById('blossoms');
-for(let i=0;i<10;i++){
-  const d = document.createElement('div');
-  d.className='blossom';
-  const s = 5 + Math.random()*7;
-  d.style.width=s+'px'; d.style.height=s+'px';
-  d.style.top = (Math.random()*70)+'px';
-  d.style.left = Math.random()>0.5 ? (Math.random()*70)+'px' : (326+Math.random()*70)+'px';
-  d.style.opacity = 0.4 + Math.random()*0.5;
-  bloss.appendChild(d);
+/* continuous falling petals across full viewport */
+function spawnPetal(){
+  const layer = document.getElementById('petals');
+  const p = document.createElement('div');
+  p.className = 'petal';
+  const s = 6 + Math.random()*9;
+  p.style.width = s+'px';
+  p.style.height = s+'px';
+  p.style.left = Math.random()*100 + 'vw';
+  p.style.setProperty('--drift', (Math.random()*120-60)+'px');
+  const dur = 9 + Math.random()*9;
+  p.style.animationDuration = dur+'s';
+  p.style.opacity = 0.4 + Math.random()*0.5;
+  layer.appendChild(p);
+  setTimeout(()=> p.remove(), dur*1000 + 200);
 }
- 
-const visitEl = document.getElementById('visitNum');
-const target = 12458;
-let cur = target - 40;
-const iv = setInterval(()=>{
-  cur++;
-  visitEl.textContent = cur.toLocaleString('vi-VN');
-  if(cur>=target) clearInterval(iv);
-}, 60);
+for(let i=0;i<14;i++) setTimeout(spawnPetal, i*300);
+setInterval(spawnPetal, 900);
 </script>
 </body>
 </html>
