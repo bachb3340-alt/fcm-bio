@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1">
+
+<title>Admin — Xuân Bách</title>
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#07030d;
+  --panel:#11091b;
+  --panel2:#170d25;
+  --purple:#9b5cf6;
+  --pink:#f78ae0;
+  --cyan:#52d9e8;
+  --text:#f5edff;
+  --muted:#9f90b8;
+  --line:rgba(255,255,255,.1);
+  --danger:#ef4444;
+  --success:#34d399;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:"Be Vietnam Pro",sans-serif;
+  background:
+    radial-gradient(
+      700px 400px at 20% 0,
+      rgba(155,92,246,.2),
+      transparent
+    ),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.login{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.login-box{
+  width:min(420px,100%);
+  padding:35px;
+  border:1px solid var(--line);
+  background:rgba(17,9,27,.85);
+  backdrop-filter:blur(20px);
+  border-radius:25px;
+  box-shadow:0 30px 100px rgba(0,0,0,.4);
+}
+
+.logo{
+  text-align:center;
+  font-size:32px;
+  font-weight:900;
+  background:linear-gradient(90deg,var(--pink),var(--cyan));
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.login-box p{
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+  margin:8px 0 28px;
+}
+
+label{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid var(--line);
+  background:#0b0611;
+  color:#fff;
+  border-radius:11px;
+  padding:12px 13px;
+  outline:none;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:var(--purple);
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.btn{
+  border:0;
+  border-radius:11px;
+  padding:12px 18px;
+  font-weight:800;
+}
+
+.primary{
+  background:linear-gradient(
+    135deg,
+    var(--purple),
+    var(--pink)
+  );
+  color:#fff;
+}
+
+.secondary{
+  background:var(--panel2);
+  color:#fff;
+  border:1px solid var(--line);
+}
+
+.danger{
+  background:rgba(239,68,68,.15);
+  color:#ff7b7b;
+  border:1px solid rgba(239,68,68,.3);
+}
+
+.hidden{
+  display:none!important;
+}
+
+
+/* ================= APP ================= */
+
+.app{
+  display:grid;
+  grid-template-columns:270px 1fr;
+  min-height:100vh;
+}
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  width:270px;
+  background:rgba(11,5,18,.95);
+  border-right:1px solid var(--line);
+  padding:25px 16px;
+}
+
+.brand{
+  padding:0 12px 25px;
+  border-bottom:1px solid var(--line);
+}
+
+.brand strong{
+  font-size:20px;
+}
+
+.brand small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.menu{
+  display:grid;
+  gap:5px;
+  margin-top:20px;
+}
+
+.menu button{
+  text-align:left;
+  border:0;
+  border-radius:11px;
+  padding:12px 14px;
+  background:transparent;
+  color:var(--muted);
+}
+
+.menu button:hover,
+.menu button.active{
+  color:#fff;
+  background:rgba(155,92,246,.14);
+}
+
+.sidebar-bottom{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:20px;
+  display:grid;
+  gap:8px;
+}
+
+.main{
+  grid-column:2;
+  padding:35px;
+  max-width:1200px;
+  width:100%;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:30px;
+}
+
+.topbar h1{
+  font-size:28px;
+}
+
+.topbar p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.panel{
+  background:rgba(17,9,27,.75);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:25px;
+  margin-bottom:20px;
+}
+
+.panel-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+  gap:10px;
+}
+
+.panel-title h2{
+  font-size:17px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+.upload{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:20px;
+  align-items:center;
+}
+
+.preview{
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  border-radius:20px;
+  background:#0b0611;
+  border:1px solid var(--line);
+}
+
+.preview.cover{
+  width:100%;
+  height:160px;
+  border-radius:15px;
+}
+
+.array-item{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+  padding:16px;
+  border-radius:15px;
+  margin-bottom:12px;
+}
+
+.array-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px;
+}
+
+.array-head strong{
+  font-size:12px;
+}
+
+.item-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.status{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  background:#151020;
+  border:1px solid var(--line);
+  padding:12px 17px;
+  border-radius:999px;
+  font-size:11px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:.3s;
+  z-index:999;
+}
+
+.status.show{
+  opacity:1;
+  transform:none;
+}
+
+.status.success{
+  border-color:rgba(52,211,153,.4);
+  color:#70efb8;
+}
+
+.status.error{
+  border-color:rgba(239,68,68,.4);
+  color:#ff8b8b;
+}
+
+.login-error{
+  color:#ff8181;
+  font-size:11px;
+  margin-top:10px;
+}
+
+@media(max-width:850px){
+
+  .app{
+    display:block;
+  }
+
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+  }
+
+  .sidebar-bottom{
+    position:static;
+    margin-top:20px;
+  }
+
+  .main{
+    padding:20px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+}
+
+@media(max-width:550px){
+
+  .topbar{
+    display:block;
+  }
+
+  .actions{
+    margin-top:15px;
+  }
+
+  .upload{
+    grid-template-columns:1fr;
+  }
+
+  .item-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div class="login" id="loginScreen">
+
+  <div class="login-box">
+
+    <div class="logo">
+      Xuân Bách
+    </div>
+
+    <p>
+      Trang quản trị Portfolio
+    </p>
+
+    <div class="form-group">
+
+      <label>
+        Mật khẩu quản trị
+      </label>
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Nhập mật khẩu">
+
+    </div>
+
+    <button
+      class="btn primary"
+      style="width:100%"
+      id="loginBtn">
+
+      Đăng nhập
+
+    </button>
+
+    <div
+      class="login-error"
+      id="loginError">
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ADMIN -->
+
+<div class="app hidden" id="adminApp">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <strong>
+        Portfolio Admin
+      </strong>
+
+      <small>
+        Quản lý Xuân Bách
+      </small>
+
+    </div>
+
+    <div class="menu">
+
+      <button
+        class="active"
+        data-section="profile">
+
+        👤 Hồ sơ
+
+      </button>
+
+      <button
+        data-section="about">
+
+        📝 Giới thiệu
+
+      </button>
+
+      <button
+        data-section="stats">
+
+        📊 Thống kê
+
+      </button>
+
+      <button
+        data-section="skills">
+
+        💻 Kỹ năng
+
+      </button>
+
+      <button
+        data-section="hobbies">
+
+        🎨 Sở thích
+
+      </button>
+
+      <button
+        data-section="social">
+
+        🔗 Mạng xã hội
+
+      </button>
+
+      <button
+        data-section="music">
+
+        🎵 Âm nhạc
+
+      </button>
+
+      <button
+        data-section="theme">
+
+        🎨 Giao diện
+
+      </button>
+
+      <button
+        data-section="data">
+
+        💾 Dữ liệu
+
+      </button>
+
+    </div>
+
+    <div class="sidebar-bottom">
+
+      <a
+        href="index.html"
+        target="_blank"
+        class="btn secondary"
+        style="text-align:center">
+
+        🌐 Xem website
+
+      </a>
+
+      <button
+        class="btn danger"
+        id="logoutBtn">
+
+        Đăng xuất
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <div>
+
+        <h1 id="sectionTitle">
+          Hồ sơ
+        </h1>
+
+        <p>
+          Chỉnh sửa website của bạn
+        </p>
+
+      </div>
+
+      <div class="actions">
+
+        <button
+          class="btn secondary"
+          id="resetBtn">
+
+          Khôi phục
+
+        </button>
+
+        <button
+          class="btn primary"
+          id="saveBtn">
+
+          💾 Lưu thay đổi
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <section
+      class="section active"
+      id="section-profile">
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <h2>Thông tin cá nhân</h2>
+        </div>
+
+        <div class="grid">
+
+          <div class="form-group">
+
+            <label>Tên</label>
+
+            <input
+              id="profileName">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Chức danh</label>
+
+            <input
+              id="profileRole">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Trạng thái</label>
+
+            <input
+              id="profileStatus">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Quote</label>
+
+            <input
+              id="profileQuote">
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-title">
+
+          <h2>Ảnh đại diện</h2>
+
+        </div>
+
+        <div class="upload">
+
+          <img
+            id="avatarPreview"
+            class="preview">
+
+          <div>
+
+            <input
+              type="file"
+              id="avatarUpload"
+              accept="image/*">
+
+            <p style="
+              color:var(--muted);
+              font-size:11px;
+              margin-top:8px">
+
+              Chọn ảnh JPG, PNG hoặc WEBP.
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-title">
+
+          <h2>Ảnh bìa</h2>
+
+        </div>
+
+        <img
+          id="coverPreview"
+          class="preview cover">
+
+        <br>
+
+        <input
+          type="file"
+          id="coverUpload"
+          accept="image/*">
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section
+      class="section"
+      id="section-about">
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <h2>Giới thiệu</h2>
+        </div>
+
+        <div class="form-group">
+
+          <label>Đoạn giới thiệu 1</label>
+
+          <textarea id="about1Input"></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Đoạn giới thiệu 2</label>
+
+          <textarea id="about2Input"></textarea>
+
+        </div>
+
+        <div class="grid">
+
+          <div class="form-group">
+
+            <label>Vị trí</label>
+
+            <input id="locationInput">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Trạng thái công việc</label>
+
+            <input id="workStatusInput">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Hướng đi</label>
+
+            <input id="directionInput">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Ngôn ngữ</label>
+
+            <input id="languagesInput">
+
+          </div>
+
+          <div class="form-group full">
+
+            <label>Mô tả phần liên hệ</label>
+
+            <textarea id="contactDescriptionInput"></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section
+      class="section"
+      id="section-stats">
+
+      <div class="panel">
+
+        <div class="panel-title">
+
+          <h2>Thống kê</h2>
+
+          <button
+            class="btn primary"
+            id="addStat">
+
+            + Thêm
+
+          </button>
+
+        </div>
+
+        <div id="statsEditor"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SKILLS -->
+
+    <section
+      class="section"
+      id="section-skills">
+
+      <div class="panel">
+
+        <div class="panel-title">
+
+          <h2>Kỹ năng</h2>
+
+          <button
+            class="btn primary"
+            id="addSkill">
+
+            + Thêm kỹ năng
+
+          </button>
+
+        </div>
+
+        <div id="skillsEditor"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOBBIES -->
+
+    <section
+      class="section"
+      id="section-hobbies">
+
+      <div class="panel">
+
+        <div class="panel-title">
+
+          <h2>Sở thích</h2>
+
+          <button
+            class="btn primary"
+            id="addHobby">
+
+            + Thêm
+
+          </button>
+
+        </div>
+
+        <div id="hobbiesEditor"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SOCIAL -->
+
+    <section
+      class="section"
+      id="section-social">
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <h2>Mạng xã hội & liên hệ</h2>
+        </div>
+
+        <div class="grid">
+
+          <div class="form-group">
+
+            <label>Facebook</label>
+
+            <input id="facebookInput"
+              placeholder="https://facebook.com/...">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>TikTok</label>
+
+            <input id="tiktokInput"
+              placeholder="https://tiktok.com/@...">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Instagram</label>
+
+            <input id="instagramInput"
+              placeholder="https://instagram.com/...">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>YouTube</label>
+
+            <input id="youtubeInput"
+              placeholder="https://youtube.com/@...">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>GitHub</label>
+
+            <input id="githubInput"
+              placeholder="https://github.com/...">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Discord</label>
+
+            <input id="discordInput"
+              placeholder="https://discord.com/...">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- MUSIC -->
+
+    <section
+      class="section"
+      id="section-music">
+
+      <div class="panel">
+
+        <div class="panel-title">
+
+          <h2>Nhạc YouTube</h2>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Tên bài hát</label>
+
+          <input id="musicTitleInput">
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Nghệ sĩ</label>
+
+          <input id="musicArtistInput">
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Link YouTube</label>
+
+          <input
+            id="musicYoutubeInput"
+            placeholder="https://www.youtube.com/watch?v=...">
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Ảnh album</label>
+
+          <input
+            type="file"
+            id="albumUpload"
+            accept="image/*">
+
+        </div>
+
+        <img
+          id="albumPreview"
+          class="preview">
+
+      </div>
+
+    </section>
+
+
+    <!-- THEME -->
+
+    <section
+      class="section"
+      id="section-theme">
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <h2>Màu giao diện</h2>
+        </div>
+
+        <div class="grid">
+
+          <div class="form-group">
+
+            <label>Màu tím</label>
+
+            <input
+              type="color"
+              id="purpleColor">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Màu hồng</label>
+
+            <input
+              type="color"
+              id="pinkColor">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>Màu cyan</label>
+
+            <input
+              type="color"
+              id="cyanColor">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- DATA -->
+
+    <section
+      class="section"
+      id="section-data">
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <h2>Sao lưu dữ liệu</h2>
+        </div>
+
+        <p style="
+          color:var(--muted);
+          font-size:12px;
+          line-height:1.7;
+          margin-bottom:20px">
+
+          Bạn có thể xuất toàn bộ dữ liệu website thành
+          file JSON để sao lưu hoặc chuyển sang máy khác.
+
+        </p>
+
+        <div class="actions">
+
+          <button
+            class="btn primary"
+            id="exportBtn">
+
+            ⬇ Xuất dữ liệu
+
+          </button>
+
+          <label
+            class="btn secondary"
+            style="display:inline-flex;align-items:center">
+
+            ⬆ Nhập dữ liệu
+
+            <input
+              type="file"
+              id="importInput"
+              accept=".json"
+              hidden>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <div class="panel-title">
+          <h2>Đổi mật khẩu Admin</h2>
+        </div>
+
+        <div class="form-group">
+
+          <label>Mật khẩu hiện tại</label>
+
+          <input
+            type="password"
+            id="oldPassword">
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Mật khẩu mới</label>
+
+          <input
+            type="password"
+            id="newPassword">
+
+        </div>
+
+        <button
+          class="btn primary"
+          id="changePassword">
+
+          Đổi mật khẩu
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<div class="status" id="toast"></div>
+
+
+<script>
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+const DEFAULT_PASSWORD = "123456";
+
+function getPassword(){
+
+  return localStorage.getItem(
+    "xuanbach_admin_password"
+  ) || DEFAULT_PASSWORD;
+
+}
+
+
+function isLoggedIn(){
+
+  return sessionStorage.getItem(
+    "xuanbach_admin_login"
+  ) === "1";
+
+}
+
+
+function showAdmin(){
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("adminApp")
+    .classList.remove("hidden");
+
+}
+
+
+function login(){
+
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
+
+  if(password === getPassword()){
+
+    sessionStorage.setItem(
+      "xuanbach_admin_login",
+      "1"
+    );
+
+    showAdmin();
+
+  }else{
+
+    document
+      .getElementById("loginError")
+      .textContent =
+      "Mật khẩu không đúng.";
+
+  }
+
+}
+
+
+document
+  .getElementById("loginBtn")
+  .onclick=login;
+
+
+document
+  .getElementById("loginPassword")
+  .addEventListener(
+    "keydown",
+    e=>{
+      if(e.key==="Enter") login();
+    }
+  );
+
+
+document
+  .getElementById("logoutBtn")
+  .onclick=()=>{
+
+    sessionStorage.removeItem(
+      "xuanbach_admin_login"
+    );
+
+    location.reload();
+
+  };
+
+
+if(isLoggedIn()) showAdmin();
+
+
+/* =====================================================
+   DATA
+===================================================== */
+
+const DEFAULT_DATA = {
+
+  profile:{
+    name:"Xuân Bách",
+    role:"DEVELOPER · DESIGNER · DREAMER",
+    avatar:"",
+    cover:"",
+    status:"Đang học hỏi mỗi ngày ⚡",
+    quote:"Không ngừng cố gắng, không ngừng tiến về phía trước — mọi thứ rồi sẽ đến."
+  },
+
+  about:{
+    description1:"Mình là lập trình viên đam mê Frontend, thích thiết kế đẹp và tối ưu trải nghiệm người dùng. Với mình, một sản phẩm tốt là nơi công nghệ và thẩm mỹ gặp nhau.",
+    description2:"Ngoài giờ code, mình còn thích chụp ảnh phong cảnh, nghe nhạc lo-fi lúc đêm khuya và luôn tò mò về những công nghệ mới.",
+    location:"Việt Nam",
+    status:"Sẵn sàng nhận việc",
+    direction:"Frontend & UI/UX",
+    languages:"Tiếng Việt, English"
+  },
+
+  stats:[
+    {number:"20+",label:"Dự án"},
+    {number:"1.2K+",label:"Followers"},
+    {number:"5+",label:"Năm kinh nghiệm"},
+    {number:"∞",label:"Đam mê"}
+  ],
+
+  skills:[
+    {name:"HTML / CSS",percent:90},
+    {name:"JavaScript",percent:80},
+    {name:"ReactJS",percent:75},
+    {name:"UI/UX Design",percent:70},
+    {name:"C++ / Python",percent:60}
+  ],
+
+  hobbies:[
+    {
+      icon:"🎮",
+      name:"Chơi Game",
+      description:"FPS, MOBA, RPG — thư giãn sau những giờ code căng thẳng."
+    },
+    {
+      icon:"🎧",
+      name:"Nghe Nhạc",
+      description:"Lo-fi, Chill, EDM — nguồn cảm hứng khi làm việc về đêm."
+    },
+    {
+      icon:"💻",
+      name:"Công Nghệ",
+      description:"Luôn cập nhật AI, Web, App — tò mò với mọi điều mới."
+    },
+    {
+      icon:"📷",
+      name:"Chụp Ảnh",
+      description:"Photography & Edit — ghi lại những khoảnh khắc đẹp."
+    }
+  ],
+
+  social:{
+    facebook:"",
+    tiktok:"",
+    instagram:"",
+    youtube:"",
+    github:"",
+    discord:""
+  },
+
+  contact:{
+    description:"Luôn sẵn sàng cho những dự án mới, ý tưởng thú vị hoặc đơn giản là một lời chào."
+  },
+
+  music:{
+    title:"Dai Dai",
+    artist:"Shakira & Burna Boy",
+    youtube:"https://www.youtube.com/watch?v=fcnDmrtj6Sk",
+    album:""
+  },
+
+  theme:{
+    purple:"#9b5cf6",
+    pink:"#f78ae0",
+    cyan:"#52d9e8"
+  }
+
+};
+
+
+function getData(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        "xuanbach_portfolio"
+      );
+
+    if(!saved)
+      return structuredClone(DEFAULT_DATA);
+
+    return merge(
+      structuredClone(DEFAULT_DATA),
+      JSON.parse(saved)
+    );
+
+  }catch(e){
+
+    return structuredClone(DEFAULT_DATA);
+
+  }
+
+}
+
+
+function merge(target,source){
+
+  for(const key in source){
+
+    if(
+      source[key] &&
+      typeof source[key]==="object" &&
+      !Array.isArray(source[key])
+    ){
+
+      target[key]=merge(
+        target[key]||{},
+        source[key]
+      );
+
+    }else{
+
+      target[key]=source[key];
+
+    }
+
+  }
+
+  return target;
+
+}
+
+
+let data=getData();
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+const sectionNames={
+
+  profile:"Hồ sơ",
+
+  about:"Giới thiệu",
+
+  stats:"Thống kê",
+
+  skills:"Kỹ năng",
+
+  hobbies:"Sở thích",
+
+  social:"Mạng xã hội",
+
+  music:"Âm nhạc",
+
+  theme:"Giao diện",
+
+  data:"Dữ liệu"
+
+};
+
+
+document
+  .querySelectorAll(".menu button")
+  .forEach(button=>{
+
+    button.onclick=()=>{
+
+      document
+        .querySelectorAll(".menu button")
+        .forEach(x=>
+          x.classList.remove("active")
+        );
+
+      button.classList.add("active");
+
+      document
+        .querySelectorAll(".section")
+        .forEach(x=>
+          x.classList.remove("active")
+        );
+
+      const name =
+        button.dataset.section;
+
+      document
+        .getElementById(
+          "section-"+name
+        )
+        .classList.add("active");
+
+      document
+        .getElementById("sectionTitle")
+        .textContent =
+        sectionNames[name];
+
+    };
+
+  });
+
+
+/* =====================================================
+   SIMPLE FIELDS
+===================================================== */
+
+function loadFields(){
+
+  profileName.value=data.profile.name;
+  profileRole.value=data.profile.role;
+  profileStatus.value=data.profile.status;
+  profileQuote.value=data.profile.quote;
+
+  about1Input.value=data.about.description1;
+  about2Input.value=data.about.description2;
+  locationInput.value=data.about.location;
+  workStatusInput.value=data.about.status;
+  directionInput.value=data.about.direction;
+  languagesInput.value=data.about.languages;
+  contactDescriptionInput.value=data.contact.description;
+
+  facebookInput.value=data.social.facebook;
+  tiktokInput.value=data.social.tiktok;
+  instagramInput.value=data.social.instagram;
+  youtubeInput.value=data.social.youtube;
+  githubInput.value=data.social.github;
+  discordInput.value=data.social.discord;
+
+  musicTitleInput.value=data.music.title;
+  musicArtistInput.value=data.music.artist;
+  musicYoutubeInput.value=data.music.youtube;
+
+  purpleColor.value=data.theme.purple;
+  pinkColor.value=data.theme.pink;
+  cyanColor.value=data.theme.cyan;
+
+  avatarPreview.src=
+    data.profile.avatar ||
+    makePlaceholder();
+
+  coverPreview.src=
+    data.profile.cover ||
+    makePlaceholder();
+
+  albumPreview.src=
+    data.music.album ||
+    makePlaceholder();
+
+  renderStatsEditor();
+  renderSkillsEditor();
+  renderHobbiesEditor();
+
+}
+
+
+function makePlaceholder(){
+
+  return "data:image/svg+xml;charset=UTF-8,"+
+    encodeURIComponent(`
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="500"
+         height="500">
+
+      <rect width="500"
+            height="500"
+            fill="#170d25"/>
+
+      <circle cx="250"
+              cy="250"
+              r="150"
+              fill="#9b5cf6"
+              opacity=".15"/>
+
+      <text x="250"
+            y="270"
+            fill="#aaa"
+            text-anchor="middle"
+            font-size="32"
+            font-family="Arial">
+
+        Preview
+
+      </text>
+
+    </svg>
+
+  `);
+
+}
+
+
+/* =====================================================
+   IMAGE UPLOAD
+===================================================== */
+
+function imageUpload(input,callback){
+
+  input.addEventListener(
+    "change",
+    ()=>{
+
+      const file=input.files[0];
+
+      if(!file)return;
+
+      const reader=new FileReader();
+
+      reader.onload=()=>{
+
+        callback(reader.result);
+
+      };
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
+imageUpload(
+  avatarUpload,
+  value=>{
+    data.profile.avatar=value;
+    avatarPreview.src=value;
+  }
+);
+
+
+imageUpload(
+  coverUpload,
+  value=>{
+    data.profile.cover=value;
+    coverPreview.src=value;
+  }
+);
+
+
+imageUpload(
+  albumUpload,
+  value=>{
+    data.music.album=value;
+    albumPreview.src=value;
+  }
+);
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function renderStatsEditor(){
+
+  statsEditor.innerHTML=
+    data.stats.map((item,index)=>`
+
+      <div class="array-item">
+
+        <div class="array-head">
+
+          <strong>
+            Thống kê #${index+1}
+          </strong>
+
+          <button
+            class="btn danger"
+            onclick="removeStat(${index})">
+
+            Xóa
+
+          </button>
+
+        </div>
+
+        <div class="item-grid">
+
+          <div>
+
+            <label>Số liệu</label>
+
+            <input
+              value="${escapeAttr(item.number)}"
+              oninput="data.stats[${index}].number=this.value">
+
+          </div>
+
+          <div>
+
+            <label>Nhãn</label>
+
+            <input
+              value="${escapeAttr(item.label)}"
+              oninput="data.stats[${index}].label=this.value">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function removeStat(index){
+
+  data.stats.splice(index,1);
+
+  renderStatsEditor();
+
+}
+
+
+addStat.onclick=()=>{
+
+  data.stats.push({
+    number:"0",
+    label:"Mới"
+  });
+
+  renderStatsEditor();
+
+};
+
+
+/* =====================================================
+   SKILLS
+===================================================== */
+
+function renderSkillsEditor(){
+
+  skillsEditor.innerHTML=
+    data.skills.map((item,index)=>`
+
+      <div class="array-item">
+
+        <div class="array-head">
+
+          <strong>
+            Kỹ năng #${index+1}
+          </strong>
+
+          <button
+            class="btn danger"
+            onclick="removeSkill(${index})">
+
+            Xóa
+
+          </button>
+
+        </div>
+
+        <div class="item-grid">
+
+          <div>
+
+            <label>Tên kỹ năng</label>
+
+            <input
+              value="${escapeAttr(item.name)}"
+              oninput="data.skills[${index}].name=this.value">
+
+          </div>
+
+          <div>
+
+            <label>Phần trăm</label>
+
+            <input
+              type="number"
+              min="0"
+              max="100"
+              value="${item.percent}"
+              oninput="data.skills[${index}].percent=this.value">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function removeSkill(index){
+
+  data.skills.splice(index,1);
+
+  renderSkillsEditor();
+
+}
+
+
+addSkill.onclick=()=>{
+
+  data.skills.push({
+    name:"Kỹ năng mới",
+    percent:50
+  });
+
+  renderSkillsEditor();
+
+};
+
+
+/* =====================================================
+   HOBBIES
+===================================================== */
+
+function renderHobbiesEditor(){
+
+  hobbiesEditor.innerHTML=
+    data.hobbies.map((item,index)=>`
+
+      <div class="array-item">
+
+        <div class="array-head">
+
+          <strong>
+            Sở thích #${index+1}
+          </strong>
+
+          <button
+            class="btn danger"
+            onclick="removeHobby(${index})">
+
+            Xóa
+
+          </button>
+
+        </div>
+
+        <div class="item-grid">
+
+          <div>
+
+            <label>Icon / Emoji</label>
+
+            <input
+              value="${escapeAttr(item.icon)}"
+              oninput="data.hobbies[${index}].icon=this.value">
+
+          </div>
+
+          <div>
+
+            <label>Tên</label>
+
+            <input
+              value="${escapeAttr(item.name)}"
+              oninput="data.hobbies[${index}].name=this.value">
+
+          </div>
+
+          <div class="full">
+
+            <label>Mô tả</label>
+
+            <textarea
+              oninput="data.hobbies[${index}].description=this.value">${escapeHtml(item.description)}</textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function removeHobby(index){
+
+  data.hobbies.splice(index,1);
+
+  renderHobbiesEditor();
+
+}
+
+
+addHobby.onclick=()=>{
+
+  data.hobbies.push({
+    icon:"✨",
+    name:"Sở thích mới",
+    description:"Mô tả sở thích..."
+  });
+
+  renderHobbiesEditor();
+
+};
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function collectFields(){
+
+  data.profile.name=
+    profileName.value.trim();
+
+  data.profile.role=
+    profileRole.value.trim();
+
+  data.profile.status=
+    profileStatus.value.trim();
+
+  data.profile.quote=
+    profileQuote.value.trim();
+
+  data.about.description1=
+    about1Input.value;
+
+  data.about.description2=
+    about2Input.value;
+
+  data.about.location=
+    locationInput.value;
+
+  data.about.status=
+    workStatusInput.value;
+
+  data.about.direction=
+    directionInput.value;
+
+  data.about.languages=
+    languagesInput.value;
+
+  data.contact.description=
+    contactDescriptionInput.value;
+
+  data.social.facebook=
+    facebookInput.value.trim();
+
+  data.social.tiktok=
+    tiktokInput.value.trim();
+
+  data.social.instagram=
+    instagramInput.value.trim();
+
+  data.social.youtube=
+    youtubeInput.value.trim();
+
+  data.social.github=
+    githubInput.value.trim();
+
+  data.social.discord=
+    discordInput.value.trim();
+
+  data.music.title=
+    musicTitleInput.value.trim();
+
+  data.music.artist=
+    musicArtistInput.value.trim();
+
+  data.music.youtube=
+    musicYoutubeInput.value.trim();
+
+  data.theme.purple=
+    purpleColor.value;
+
+  data.theme.pink=
+    pinkColor.value;
+
+  data.theme.cyan=
+    cyanColor.value;
+
+}
+
+
+saveBtn.onclick=()=>{
+
+  collectFields();
+
+  localStorage.setItem(
+    "xuanbach_portfolio",
+    JSON.stringify(data)
+  );
+
+  showToast(
+    "Đã lưu toàn bộ thay đổi!",
+    "success"
+  );
+
+};
+
+
+function showToast(message,type="success"){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent=message;
+
+  toast.className=
+    "status show "+type;
+
+  setTimeout(
+    ()=>toast.className="status",
+    2500
+  );
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+resetBtn.onclick=()=>{
+
+  if(
+    !confirm(
+      "Khôi phục toàn bộ dữ liệu mặc định?"
+    )
+  )return;
+
+  data=
+    structuredClone(DEFAULT_DATA);
+
+  localStorage.removeItem(
+    "xuanbach_portfolio"
+  );
+
+  loadFields();
+
+  showToast(
+    "Đã khôi phục dữ liệu mặc định."
+  );
+
+};
+
+
+/* =====================================================
+   EXPORT
+===================================================== */
+
+exportBtn.onclick=()=>{
+
+  collectFields();
+
+  const blob=
+    new Blob(
+      [JSON.stringify(data,null,2)],
+      {type:"application/json"}
+    );
+
+  const url=
+    URL.createObjectURL(blob);
+
+  const a=
+    document.createElement("a");
+
+  a.href=url;
+
+  a.download=
+    "xuanbach-portfolio-backup.json";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+};
+
+
+importInput.onchange=()=>{
+
+  const file=
+    importInput.files[0];
+
+  if(!file)return;
+
+  const reader=
+    new FileReader();
+
+  reader.onload=()=>{
+
+    try{
+
+      data=
+        JSON.parse(reader.result);
+
+      localStorage.setItem(
+        "xuanbach_portfolio",
+        JSON.stringify(data)
+      );
+
+      loadFields();
+
+      showToast(
+        "Đã nhập dữ liệu thành công."
+      );
+
+    }catch(e){
+
+      showToast(
+        "File JSON không hợp lệ.",
+        "error"
+      );
+
+    }
+
+  };
+
+  reader.readAsText(file);
+
+};
+
+
+/* =====================================================
+   PASSWORD
+===================================================== */
+
+changePassword.onclick=()=>{
+
+  const oldPassword=
+    oldPasswordInput();
+
+  const newPassword=
+    document
+      .getElementById("newPassword")
+      .value;
+
+  if(oldPassword!==getPassword()){
+
+    showToast(
+      "Mật khẩu hiện tại không đúng.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  if(newPassword.length<6){
+
+    showToast(
+      "Mật khẩu mới phải có ít nhất 6 ký tự.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  localStorage.setItem(
+    "xuanbach_admin_password",
+    newPassword
+  );
+
+  document
+    .getElementById("oldPassword")
+    .value="";
+
+  document
+    .getElementById("newPassword")
+    .value="";
+
+  showToast(
+    "Đã đổi mật khẩu."
+  );
+
+};
+
+
+function oldPasswordInput(){
+
+  return document
+    .getElementById("oldPassword")
+    .value;
+
+}
+
+
+/* =====================================================
+   UTILITIES
+===================================================== */
+
+function escapeAttr(value){
+
+  return String(value??"")
+    .replaceAll("&","&amp;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value??"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadFields();
+
+</script>
+
+</body>
+</html>
